@@ -3,3 +3,12 @@ node_modules/
 .DS_Store
 .vscode/
 .idea/
+*.bak
+*.tmp
+inspect*.js
+find_*.js
+run_inspect.js
+test_inspector.js
+dom_inspection.json
+details_inspection.json
+hierarchy.json

@@ -24,14 +24,14 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo >> [1/3] 正在安装运行时依赖 (puppeteer-core)...
+echo [1/3] 正在安装运行时依赖 (puppeteer-core)...
 call npm install --silent
 if %errorlevel% neq 0 (
     echo [警告] npm 依赖安装可能未完成，尝试再次检查...
 )
 
 :: 2. 自动检索 Antigravity 安装路径以绑定图标
-echo >> [2/3] 正在检测 Antigravity 程序路径与图标...
+echo [2/3] 正在检测 Antigravity 程序路径与图标...
 set "ANTIGRAVITY_EXE="
 if exist "%LOCALAPPDATA%\Programs\Antigravity\Antigravity.exe" (
     set "ANTIGRAVITY_EXE=%LOCALAPPDATA%\Programs\Antigravity\Antigravity.exe"
@@ -48,7 +48,7 @@ if exist "%LOCALAPPDATA%\Programs\Antigravity\Antigravity.exe" (
 )
 
 :: 3. 创建桌面与开始菜单快捷方式
-echo >> [3/3] 正在生成桌面快捷方式 [Claude Antigravity]...
+echo [3/3] 正在生成桌面快捷方式 [Claude Antigravity]...
 powershell -NoProfile -Command ^
     "$ws = New-Object -ComObject WScript.Shell; " ^
     "$desktopPath = [Environment]::GetFolderPath('Desktop'); " ^

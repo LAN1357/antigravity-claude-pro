@@ -7,9 +7,9 @@ echo     正在回滚 Antigravity 主题至 v1.2.0-stable 版本
 echo ==================================================
 
 git checkout v1.2.0-stable -- claude-style.css claude-enhancer.js
-echo >> 已从 Git 标签恢复至 v1.2.0-stable。
+echo 已从 Git 标签恢复至 v1.2.0-stable。
 
-echo >> 正在触发热更新...
+echo 正在触发热更新...
 powershell -NoProfile -Command "(Get-Item 'claude-style.css').LastWriteTime = Get-Date; (Get-Item 'claude-enhancer.js').LastWriteTime = Get-Date" >nul 2>&1
 
 echo ==================================================

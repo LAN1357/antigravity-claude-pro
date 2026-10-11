@@ -1,135 +1,124 @@
-# Antigravity Claude Theme (Claude Minimal for Antigravity 2.x)
+# Claude Antigravity Pro (Awwwards & Apple Design Edition)
 
-[English](#english) | [中文说明](#中文说明)
-
----
-
-## 中文说明
-
-为 **Google Antigravity 2.x** 桌面客户端（macOS & Windows 双平台）量身打造的 Claude Minimal 主题方案。
-
-通过 Chromium 远程调试端口进行无损内存注入，**不修改任何应用本体文件、不解包 `app.asar`、不依赖第三方社区修补工具、不破坏代码签名**。随时可 100% 还原官方出厂默认外观。
-
-### ✨ 核心特性
-
-- **🖥️ macOS & Windows 双平台无缝支持**：针对各平台（Mac 访达 / Win 文件资源管理器、系统字体渲染、路径格式）自动动态适配。
-- **🛡️ 纯净无损与完全可逆**：零 Patch，零文件篡改。正常打开客户端即可秒回官方原版。
-- **🔄 官方无缝更新**：Antigravity 随意自动更新或覆盖安装，绝对不报错、不冲突。
-- **⚡ 实时热重载 (Hot-Reload)**：修改 `claude-style.css` 或 `claude-enhancer.js` 保存后，毫秒级推送到运行中的窗口，无需重启应用。
-- **📄 文件交互与上下文菜单 (v1.4)**：
-  - **左键单击**：直接使用系统默认程序即时打开文件。
-  - **右键单击**：唤起 Apple / Claude 原质毛玻璃菜单，支持「在访达中显示 / 在资源管理器中显示」、「复制完整路径」、「复制文件名」。
-- **🎨 细腻的 Claude 设计语言**：
-  - **中性微暖底色**：背景采用极轻微暖调中性浅色（`#FAFAF8`），纯白卡片（`#FFFFFF`），告别偏黄偏暗。
-  - **彻底去光圈输入框**：消除原生多层描边与常亮橙色外发光，以优雅的 1px 细线（`#E6E5E0`）呈现，聚焦时自然变为加深灰（`#B8B6B0`）。
-  - **克制的陶土橙强调色**：`#D97757` 仅保留在发送按钮与正文超链接上。
-  - **跨平台精选字体**：全离线字体栈（Mac: 苹方 + SF Pro，Win: Segoe UI + 微软雅黑 UI，代码: Cascadia / SF Mono）。
-  - **双模式支持**：浅色模式中性微暖，深色模式炭黑沉浸。
-- **📁 默认日常工作区路由与三段侧边栏**：
-  - 全局点击左上角「`+ 新建对话`」时，自动绑定到默认日常工作区。
-  - 置顶 / 项目 / 最近 三段式折叠布局，整洁收纳。
+[中文说明](#-中文说明) | [English](#-english)
 
 ---
 
-### 🚀 极速上手
+## 🇨🇳 中文说明
 
-#### 🍎 macOS 用户
+为 **Google Antigravity 2.x** 桌面客户端（macOS & Windows 双平台）量身定制的顶级设计系统方案。
+
+融合 **Apple Design System（WWDC 物理动效与光学排版）** 与 **cursor.directory 高工设计标准（1px 深度阶梯与微交互）**，对标 **Awwwards Site of the Day / FWA 获奖品质**。
+
+通过 Chromium 远程调试端口进行**纯无损内存注入**：**不修改任何应用本体文件、不解包 `app.asar`、不依赖第三方社区修补工具、不破坏代码签名**。随时可秒回官方原版。
+
+---
+
+### ✨ 核心设计亮点 (Award-Winning Highlights)
+
+- **🎨 典雅纸白与黑曜石沉浸双模式 (Dual Mode)**：
+  - **浅色模式**：采用 Claude 标志性温润中性暖调底色（`#FAF9F5`），纯白卡片（`#FFFFFF`）配合发丝级高光与双层环境漫反射阴影。
+  - **深色模式**：炭黑黑曜石质感（`#151514`），发丝高光边框（`rgba(255, 255, 255, 0.075)`），沉浸专注。
+- **🫧 悬浮晶透高能控制坞 (Floating Acrylic Dock)**：
+  - 底部输入框重塑为 20px 大圆角悬浮浮动 Dock，配备 `backdrop-filter: blur(28px) saturate(190%)` 晶透毛玻璃。
+  - 聚焦时触发细腻上浮微动效与柔和陶土橙光晕呼吸（`#DA7756`）。
+- **🍎 Apple 原生物理微交互 (WWDC Fluid Interfaces)**：
+  - **零延迟按压反馈**：在 `pointer-down` 瞬间即提供 `scale(0.97)` 物理压缩触感，无多余等待延迟。
+  - **可打断弹性动效**：全部抽屉、浮层、手风琴折叠均基于真实弹簧阻尼参数运行。
+- **👁️ 光学排版工程 (Optical Typography)**：
+  - 标题启用负向字偶距光学紧缩（Negative Tracking），正文采用舒适黄金行高（1.72）。
+  - 所有时间戳、计数器与数字指标严格启用等宽数字（`tabular-nums`），彻底消除布局抖动。
+- **📄 文件极速交互与原质上下文菜单**：
+  - **左键单击**：直接唤起系统默认关联程序秒开文件。
+  - **右键单击**：唤起 macOS Tahoe / Windows 11 原质毛玻璃菜单，支持「在访达中显示 / 在资源管理器中显示」、「复制完整路径」、「复制文件名」。
+- **🗂️ 侧边栏三段式折叠与 SPA 极速路由**：
+  - 置顶 / 项目 / 最近 三段式收纳，支持平滑手风琴风琴折叠。
+  - 全局「`+ 新建对话`」无刷新秒级跳转日常工作区。
+- **⚡ 实时热重载 (Live Hot Reload)**：
+  - 修改 `claude-style.css` 或 `claude-enhancer.js` 保存后，毫秒级推送到运行中的活动窗口，无需重启应用。
+
+---
+
+### 🚀 极速安装与使用指南
+
+#### 🍎 macOS 用户 (Apple Silicon M1/M2/M3/M4 & Intel)
 
 1. **环境准备**：已安装 [Node.js](https://nodejs.org/) (`brew install node`)
 2. **一键安装**：
    ```bash
-   git clone https://github.com/LAN1357/antigravity-claude-theme.git ~/claude-style
+   git clone https://github.com/LAN1357/antigravity-claude-award.git ~/claude-style
    cd ~/claude-style
+   chmod +x install.sh
    ./install.sh
    ```
+   > `install.sh` 将自动安装轻量依赖、提取官方高分辨率图标，并在 `~/Applications` 下编译生成原生 **`Claude Antigravity.app`**。
+
 3. **日常启动**：
-   - 按 `Cmd + 空格` 搜索 `Claude Antigravity` 回车启动；
+   - 按 `Cmd + 空格` 搜索 **`Claude Antigravity`** 回车秒开；
    - 或双击运行 `~/claude-style/start-claude-style.command`。
 
 ---
 
-#### 🪟 Windows 用户
+#### 🪟 Windows 用户 (Windows 10 / 11)
 
 1. **环境准备**：已安装 [Node.js](https://nodejs.org/)（或运行 `winget install OpenJS.NodeJS.LTS`）
 2. **一键安装**：
    在 CMD 或 PowerShell 中运行：
    ```cmd
-   git clone https://github.com/LAN1357/antigravity-claude-theme.git "%USERPROFILE%\claude-style"
+   git clone https://github.com/LAN1357/antigravity-claude-award.git "%USERPROFILE%\claude-style"
    cd /d "%USERPROFILE%\claude-style"
    install.bat
    ```
+   > `install.bat` 会自动在桌面创建无控制台黑框的 **`Claude Antigravity`** 快捷方式。
+
 3. **日常启动**：
-   - **方式一（推荐）**：双击桌面上自动生成的 **`Claude Antigravity`** 快捷方式（无黑色命令行窗口，直接启动）；
-   - **方式二**：在开始菜单搜索 `Claude Antigravity` 回车启动；
-   - **方式三**：双击运行目录下的 `start-claude-style.bat`。
+   - 双击桌面上自动生成的 **`Claude Antigravity`** 快捷图标；
+   - 或在开始菜单搜索 `Claude Antigravity` 回车启动。
 
 ---
 
 ### 🛠️ 故障排查与一键修复
 
-如果哪次 Antigravity 因僵尸进程、代理变化或缓存异常打不开，只需运行专属一键修复工具：
+如果 Antigravity 因僵尸进程、系统代理切换或缓存死锁打不开，可运行专属一键修复工具：
 - **macOS**：双击运行 `repair-antigravity.command`
 - **Windows**：双击运行 `repair-antigravity.bat`
 
-自动清理残留死锁，重新探测代理并重启注入，**严格保留全部聊天记录与设置**。
+自动清理死锁，重新嗅探代理并启动注入，**严格保护全部聊天记录与用户配置**。
 
 ---
 
-### ⏪ 版本回滚
+## 🌐 English
 
-- **回滚到 v1.3.1 (无框折叠版)**：运行 `rollback-to-v1.3.command` (Mac) 或 `rollback-to-v1.3.bat` (Win)
-- **回滚到 v1.2.0 (经典稳定版)**：运行 `rollback-to-v1.2.command` (Mac) 或 `rollback-to-v1.2.bat` (Win)
+An **Awwwards / FWA winning caliber** design system and interaction suite for **Google Antigravity 2.x** desktop client on macOS & Windows.
 
----
-
-## English
-
-A minimalist Claude-style theme for **Google Antigravity 2.x** desktop client on macOS & Windows.
-
-Implemented via non-destructive Chromium Remote Debugging Port injection. **Zero binary patching, zero `app.asar` unpacking, zero third-party community tools, zero signature breakage**. Fully reversible at any time.
+Built on **Apple Human Interface Guidelines (WWDC 2018/2020/2026)** and **cursor.directory high-craft standards**.
 
 ### ✨ Highlights
 
-- **Cross-Platform**: Seamlessly works on both macOS and Windows 10/11.
-- **100% Non-Destructive**: Leaves original application files untouched. Open Antigravity normally to instantly revert to the stock look.
-- **Update-Proof**: Official auto-updates work seamlessly without conflict.
-- **Live Hot Reload**: Edits to CSS/JS reflect in active client windows instantly without restart.
-- **File Interactions (v1.4)**: Single-click to open files; right-click context menu to reveal in Finder (macOS) / File Explorer (Windows).
-- **Refined Claude Aesthetics**: Neutral warm paper background (`#FAFAF8`), 1px non-glowing input borders, Terracotta Orange accents, and native system typography.
-
-### 📦 Quick Start
-
-#### macOS
-```bash
-git clone https://github.com/LAN1357/antigravity-claude-theme.git ~/claude-style
-cd ~/claude-style
-./install.sh
-```
-
-#### Windows
-```cmd
-git clone https://github.com/LAN1357/antigravity-claude-theme.git "%USERPROFILE%\claude-style"
-cd /d "%USERPROFILE%\claude-style"
-install.bat
-```
+- **100% Non-Destructive**: Zero binary patching, zero `app.asar` unpacking, zero signature breakage. Fully reversible at any time.
+- **Editorial Paper & Obsidian Modes**: Warm alabaster paper background (`#FAF9F5`) in light mode, deep obsidian slate (`#151514`) in dark mode.
+- **Floating Acrylic Dock**: 20px rounded glassmorphic input dock with `backdrop-filter: blur(28px) saturate(190%)` and dual-layer ambient shadows.
+- **WWDC Fluid Motion**: Zero-latency press feedback (`scale(0.97)` on pointer-down) and interruptible spring physics across all modals and drawers.
+- **Native File Context Menu**: Left-click to open files directly in default apps; right-click for frosted glass menu with Reveal in Finder / File Explorer.
+- **Cross-Platform**: Tailored scripts and native app bundles for macOS and Windows.
 
 ---
 
 ### 📁 Project Structure
 
 ```text
-├── claude-style.css           # Core stylesheet (macOS & Windows typography)
-├── claude-enhancer.js         # Enhancer logic (file click, context menu, recents)
+├── claude-style.css           # Core stylesheet (Apple typography, tokens, glassmorphism)
+├── claude-enhancer.js         # Enhancer logic (Finder/Explorer context menu, accordion)
 ├── inject.js                  # Cross-platform Puppeteer CDP injector
-├── install.sh                 # macOS one-click installer
-├── install.bat                # Windows one-click installer (creates desktop shortcut)
-├── run-silent.vbs             # Windows silent background launcher
-├── start-claude-style.command # macOS launcher
-├── start-claude-style.bat     # Windows launcher
+├── install.sh                 # macOS one-click installer (generates native .app)
+├── start-claude-style.command # macOS launcher (proxy sniffing & CDP injection)
 ├── repair-antigravity.command # macOS one-click diagnostic & repair tool
+├── install.bat                # Windows one-click installer (creates desktop shortcut)
+├── start-claude-style.bat     # Windows launcher
 ├── repair-antigravity.bat     # Windows one-click diagnostic & repair tool
-├── rollback-to-v1.3.*         # Checkpoint rollback scripts
-└── rollback-to-v1.2.*         # Checkpoint rollback scripts
+├── run-silent.vbs             # Windows silent background runner
+├── screenshots/               # High-fidelity visual captures
+└── README.md                  # Comprehensive bilingual guide
 ```
 
 ---

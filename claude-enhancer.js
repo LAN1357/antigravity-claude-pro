@@ -1,8 +1,10 @@
 /**
- * Claude Enhancer for Antigravity
- * 1. 置顶 / 项目 / 最近 侧边栏三段式结构（全部支持折叠/展开）
- * 2. 项目名加粗与紧凑间距
- * 3. 新建对话 SPA 无刷新秒开 (默认路由至 antigravity日常)
+ * Claude Enhancer for Antigravity (Award-Winning UX & Interaction System)
+ * 1. 置顶 / 项目 / 最近 侧边栏三段式结构（全部支持折叠/展开与 SPA 秒开）
+ * 2. 呼吸指示灯与工具调用折叠管理（流式输出不跳动、不遮挡）
+ * 3. 侧边栏导航条目与核心操作本土化与微交互增强
+ * 4. 文件单机即开 + 右键 Apple 级原质毛玻璃上下文菜单
+ * 5. 全局零延迟按压反馈 (Pointer-Down Tactile Spring Response)
  */
 (function() {
   const DAILY_SECTION_ID = '3f37f9eb-e69b-4496-b230-dd157ff2f379';
@@ -30,29 +32,85 @@
     return window.__antigravity_router || window.__TSR_ROUTER__ || null;
   }
 
-  // 2. 劫持顶部全局“+ 新建对话”按钮：无刷新秒开日常工作区
+  // 2. 劫持顶部全局“+ 新建对话”按钮：无刷新秒开日常工作区 + 本土化
   function hookNewChat() {
     const newChatBtn = document.querySelector('[data-testid="new-conversation-button"]');
-    if (newChatBtn && !newChatBtn.dataset.hookedDailySpa) {
-      newChatBtn.dataset.hookedDailySpa = 'true';
-      newChatBtn.setAttribute('href', `/?section=${DAILY_SECTION_ID}`);
-      newChatBtn.addEventListener('click', (e) => {
-        if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
-          e.preventDefault();
-          e.stopPropagation();
-          const router = getRouter();
-          if (router && typeof router.navigate === 'function') {
-            router.navigate({ to: '/', search: { section: DAILY_SECTION_ID } });
-          } else {
-            window.location.href = `/?section=${DAILY_SECTION_ID}`;
+    if (newChatBtn) {
+      const span = newChatBtn.querySelector('span.truncate');
+      if (span && span.textContent.trim() === 'New Conversation') {
+        span.textContent = '新建对话';
+      }
+
+      if (!newChatBtn.dataset.hookedDailySpa) {
+        newChatBtn.dataset.hookedDailySpa = 'true';
+        newChatBtn.setAttribute('href', `/?section=${DAILY_SECTION_ID}`);
+        newChatBtn.addEventListener('click', (e) => {
+          if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            const router = getRouter();
+            if (router && typeof router.navigate === 'function') {
+              router.navigate({ to: '/', search: { section: DAILY_SECTION_ID } });
+            } else {
+              window.location.href = `/?section=${DAILY_SECTION_ID}`;
+            }
           }
-        }
-      }, true);
+        }, true);
+      }
     }
   }
 
-  // 3. 重命名原生分组标题：Pinned Conversations -> 置顶，项目列表 -> 项目
-  function renameHeaders() {
+  // 3. 导航项与分组标题全量本土化与细节打磨
+  function refineNavigationAndHeaders() {
+    // 侧边栏快捷功能按钮汉化（遍历匹配，绝对可靠）
+    document.querySelectorAll('a, button').forEach(el => {
+      const text = el.textContent.trim();
+      if (text.includes('Conversation History')) {
+        el.querySelectorAll('span, div').forEach(s => {
+          if (s.children.length === 0 && s.textContent.trim() === 'Conversation History') s.textContent = '会话历史';
+        });
+      } else if (text.includes('Automations')) {
+        el.querySelectorAll('span, div').forEach(s => {
+          if (s.children.length === 0 && s.textContent.trim() === 'Automations') s.textContent = '自动化';
+        });
+      } else if (text.includes('Customizations')) {
+        el.querySelectorAll('span, div').forEach(s => {
+          if (s.children.length === 0 && s.textContent.trim() === 'Customizations') s.textContent = '扩展与技能';
+        });
+      } else if (text.includes('Settings')) {
+        el.querySelectorAll('span, div').forEach(s => {
+          if (s.children.length === 0 && s.textContent.trim() === 'Settings') s.textContent = '系统设置';
+        });
+      }
+    });
+
+    // 针对 TreeWalker 全局兜底汉化微文本
+    try {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+          const p = node.parentElement;
+          if (!p || p.tagName === 'SCRIPT' || p.tagName === 'STYLE' || p.tagName === 'HEAD' || p.tagName === 'TITLE') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      let node;
+      while ((node = walker.nextNode())) {
+        const val = node.nodeValue?.trim();
+        if (val === 'Customizations') {
+          node.nodeValue = '扩展与技能';
+        } else if (val === 'Conversation History') {
+          node.nodeValue = '会话历史';
+        } else if (val === 'Automations') {
+          node.nodeValue = '自动化';
+        } else if (val === 'Settings') {
+          node.nodeValue = '系统设置';
+        }
+      }
+    } catch (e) {}
+
+    // 分组标题
     const headers = document.querySelectorAll('[data-testid="section-header"]');
     headers.forEach(h => {
       const title = h.getAttribute('data-title');
@@ -67,13 +125,12 @@
     });
   }
 
-  // 4. 渲染最近对话列表 (Section 3: 最近，带折叠/展开按钮)
+  // 4. 渲染最近对话列表 (Section 3: 最近，带优雅平滑手风琴折叠)
   function renderRecents() {
     const scrollContainer = document.querySelector('.relative.w-full.h-full.overflow-y-auto') ||
                             document.querySelector('[data-testid="conversation-list-sidebar"]');
     if (!scrollContainer) return;
 
-    // 获取数据：优先内存变量，其次 localStorage 缓存
     let recents = window.__claude_recent_conversations;
     if (Array.isArray(recents) && recents.length > 0) {
       try {
@@ -96,11 +153,10 @@
       scrollContainer.appendChild(recentSec);
     }
 
-    // 绑定事件委托（确保即使元素已存在也能绑定最新事件）
-    if (recentSec.dataset.hookedVersion !== '2') {
-      recentSec.dataset.hookedVersion = '2';
+    if (recentSec.dataset.hookedVersion !== '3') {
+      recentSec.dataset.hookedVersion = '3';
       recentSec.addEventListener('click', (e) => {
-        // A. 点击折叠/展开按钮
+        // A. 折叠/展开
         const toggleBtn = e.target.closest('.claude-recent-toggle-btn');
         if (toggleBtn) {
           e.preventDefault();
@@ -146,7 +202,6 @@
     const currentPath = window.location.pathname;
     const currentId = currentPath.startsWith('/c/') ? currentPath.split('/c/')[1]?.split('?')[0] : '';
 
-    // 生成列表内容
     const listHtml = recents.map(item => {
       const isActive = item.id === currentId;
       const safeTitle = (item.title || '新对话')
@@ -175,7 +230,6 @@
       recentSec.innerHTML = newHtml;
       recentSec.dataset.lastHtml = newHtml;
     } else {
-      // 仅更新 active 状态高亮
       recentSec.querySelectorAll('.claude-recent-item').forEach(link => {
         const id = link.getAttribute('data-id');
         if (id === currentId) {
@@ -187,7 +241,7 @@
     }
   }
 
-  // 5. 净化顶部杂项按钮（如“安装 IDE”等非必要推广）
+  // 5. 隐藏非必要推广元素
   function hidePromoButtons() {
     const btns = document.querySelectorAll('button');
     btns.forEach(b => {
@@ -197,14 +251,12 @@
     });
   }
 
-  // 6. Claude 统一思考与执行栏控制器 (Unified Thought & Tool Execution Drawer)
-
-  // A. 全局事件委托：监听复制/展开以及用户手动折叠行为
+  // 6. 统一思考与工具调用抽屉控制器
   if (!window.__claude_thought_events_bound) {
     window.__claude_thought_events_bound = true;
 
     document.addEventListener('click', (e) => {
-      // 1. 复制原始命令
+      // 复制原始命令
       const copyBtn = e.target.closest('.claude-btn-copy');
       if (copyBtn) {
         e.preventDefault();
@@ -219,7 +271,7 @@
         return;
       }
 
-      // 2. 展开/折叠原始命令
+      // 展开/收起原始完整命令
       const expandBtn = e.target.closest('.claude-btn-expand');
       if (expandBtn) {
         e.preventDefault();
@@ -233,16 +285,14 @@
         return;
       }
 
-      // 3. 用户手动点击折叠/展开主栏（Requirement 4: 手动展开过的栏绝不被自动折叠）
+      // 用户手动点击主栏展开/折叠
       const triggerBtn = e.target.closest('button[data-testid="tool-group-collapsible"], button[data-testid="thinking-collapsible-trigger"], button[data-testid="worked-for-collapsible"]');
       if (triggerBtn) {
         const wasExpanded = triggerBtn.getAttribute('aria-expanded') === 'true';
         if (!wasExpanded) {
-          // 用户手动展开：打上用户已展开标记，防止被自动折叠
           triggerBtn.dataset.claudeUserOpened = 'true';
           delete triggerBtn.dataset.claudeUserClosed;
         } else {
-          // 用户手动折叠：移除展开标记并标记已手动关闭
           delete triggerBtn.dataset.claudeUserOpened;
           triggerBtn.dataset.claudeUserClosed = 'true';
         }
@@ -250,7 +300,7 @@
     }, true);
   }
 
-  // B. 文本汉化映射表
+  // 汉化词典映射
   function translateChinese(str) {
     if (!str || typeof str !== 'string') return str;
     return str
@@ -258,15 +308,17 @@
       .replace(/Explored (\d+) files?/gi, '已探索 $1 个文件')
       .replace(/Exploring (\d+) search(?:es)?/gi, '探索 $1 次搜索')
       .replace(/Explored (\d+) search(?:es)?/gi, '已探索 $1 次搜索')
+      .replace(/(\d+)\s*tasks?\s*running/gi, '$1 个任务正在执行')
+      .replace(/^1 task running/gi, '1 个任务正在执行')
       .replace(/(\d+)\s*tasks?/gi, '$1 个任务')
       .replace(/running (\d+) commands?/gi, '运行 $1 条命令')
       .replace(/ran (\d+) commands?/gi, '已运行 $1 条命令')
-      .replace(/Worked for (\d+)m\s*(\d+)s/gi, '已耗时 $1 分 $2 秒')
-      .replace(/Worked for (\d+)m/gi, '已耗时 $1 分钟')
-      .replace(/Worked for (\d+)s/gi, '已耗时 $1 秒')
-      .replace(/Thought for (\d+)m\s*(\d+)s/gi, '已思考 $1 分 $2 秒')
-      .replace(/Thought for (\d+)m/gi, '已思考 $1 分钟')
-      .replace(/Thought for (\d+)s/gi, '已思考 $1 秒')
+      .replace(/Worked for (\d+)m\s*(\d+)s/gi, '耗时 $1 分 $2 秒')
+      .replace(/Worked for (\d+)m/gi, '耗时 $1 分钟')
+      .replace(/Worked for (\d+)s/gi, '耗时 $1 秒')
+      .replace(/Thought for (\d+)m\s*(\d+)s/gi, '思考 $1 分 $2 秒')
+      .replace(/Thought for (\d+)m/gi, '思考 $1 分钟')
+      .replace(/Thought for (\d+)s/gi, '思考 $1 秒')
       .replace(/^Thinking\.*/gi, '思考中...')
       .replace(/^Running\.*/gi, '执行中...')
       .replace(/^Working\.*/gi, '执行中...')
@@ -276,16 +328,17 @@
       .replace(/^Load older messages$/gi, '加载更早消息');
   }
 
-  // C. 主处理逻辑
   function processThoughtAndToolDocks() {
     const turns = document.querySelectorAll('div.group.w-full.scroll-mt-4');
 
     turns.forEach((turn) => {
-      // 查找本轮全部抽屉触发按钮（包含工具组、耗时汇总、思考过程）
       const triggers = turn.querySelectorAll('button[data-testid="tool-group-collapsible"], button[data-testid="thinking-collapsible-trigger"], button[data-testid="worked-for-collapsible"]');
 
       triggers.forEach((btn) => {
-        // (1) 标题文本汉化 (Requirement 6)
+        // 如果是原生 hidden 的元素，直接跳过处理
+        if (btn.classList.contains('hidden')) return;
+
+        // (1) 标题文本汉化
         const span = btn.querySelector('span');
         if (span && span.textContent) {
           const translated = translateChinese(span.textContent.trim());
@@ -300,16 +353,27 @@
           btn.setAttribute('aria-label', translateChinese(btn.getAttribute('aria-label')));
         }
 
-        // (2) 默认折叠：非用户手动展开时，保持折叠 (Requirement: 命令不要默认展开)
-        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-        if (isExpanded) {
-          if (btn.dataset.claudeUserOpened !== 'true') {
-            btn.click();
-            btn.dataset.claudeAutoCollapsed = 'true';
+        // (2) 呼吸指示灯管理
+        const isRunning = /思考中|执行中|Running|Thinking|Working/i.test(btn.textContent || '');
+        let pulseDot = btn.querySelector('.claude-pulse-dot');
+        if (isRunning) {
+          if (!pulseDot) {
+            pulseDot = document.createElement('span');
+            pulseDot.className = 'claude-pulse-dot';
+            btn.prepend(pulseDot);
           }
+        } else if (pulseDot) {
+          pulseDot.remove();
         }
 
-        // (3) 报错、权限确认等需要介入时，折叠态也要显示一行醒目提示 (Requirement 3)
+        // (3) 默认折叠：非用户手动展开时，保持折叠
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        if (isExpanded && btn.dataset.claudeUserOpened !== 'true') {
+          btn.click();
+          btn.dataset.claudeAutoCollapsed = 'true';
+        }
+
+        // (4) 异常/权限确认介入提醒
         const parentRelative = btn.parentElement;
         const scrollContainer = parentRelative?.querySelector('div.overflow-y-auto');
 
@@ -321,8 +385,8 @@
 
           if (hasDestructive || permBtn || hasTermError) {
             btn.dataset.claudeHasAlert = 'true';
-            if (permBtn) btn.dataset.claudeAlertMsg = '需要授权确认：等待权限许可后继续执行';
-            else btn.dataset.claudeAlertMsg = '步骤执行报错：包含异常退出或失败命令';
+            if (permBtn) btn.dataset.claudeAlertMsg = '待确认：需要权限许可后继续执行';
+            else btn.dataset.claudeAlertMsg = '步骤提示：包含异常退出或未完成命令';
           } else {
             delete btn.dataset.claudeHasAlert;
             delete btn.dataset.claudeAlertMsg;
@@ -334,11 +398,11 @@
           let alertStrip = parentRelative.querySelector(':scope > .claude-intervention-strip');
           if (hasAlert) {
             btn.classList.add('has-intervention');
-            const alertMsg = btn.dataset.claudeAlertMsg || '检测到步骤报错或待权限确认，点击可展开查看详情';
+            const alertMsg = btn.dataset.claudeAlertMsg || '检测到待确认事项，点击展开查看详情';
             if (!alertStrip) {
               alertStrip = document.createElement('div');
               alertStrip.className = 'claude-intervention-strip';
-              alertStrip.innerHTML = `<span class="claude-alert-badge">需要确认</span><span class="claude-alert-text">${alertMsg}</span>`;
+              alertStrip.innerHTML = `<span class="claude-step-badge">介入提醒</span><span>${alertMsg}</span>`;
               parentRelative.appendChild(alertStrip);
             }
           } else {
@@ -347,7 +411,7 @@
           }
         }
 
-        // (4) 展开区滚动管理与向上滚动保护 (Requirement 1 & 4)
+        // (5) 展开区向上翻阅保护
         if (scrollContainer) {
           if (!scrollContainer.dataset.claudeScrollBound) {
             scrollContainer.dataset.claudeScrollBound = 'true';
@@ -361,12 +425,11 @@
             }, { passive: true });
           }
 
-          // 用户未向上翻阅时，内部自动触底
           if (scrollContainer.dataset.userScrolledUp !== 'true') {
             scrollContainer.scrollTop = scrollContainer.scrollHeight;
           }
 
-          // (5) 工具调用单行截断、动作名显示、展开复制与连续相同调用合并 ×N (Requirement 5)
+          // (6) 步骤单行截断与连续调用合并
           const rowDivs = Array.from(scrollContainer.querySelectorAll('div.flex.flex-col.gap-0\\.5 > div.flex.flex-row'));
           let prevSig = null;
           let prevRow = null;
@@ -385,20 +448,18 @@
               rawCmd = mono?.textContent || '';
               sig = 'cmd:' + rawCmd.trim();
 
-              // 简短动作名
               const ranSpan = cmdStep.querySelector('.text-secondary-foreground span:first-child');
               if (ranSpan && (ranSpan.textContent === 'Ran' || ranSpan.textContent === 'Run')) {
                 ranSpan.className = 'claude-step-badge';
                 ranSpan.textContent = '运行命令';
               }
 
-              // 操作按钮（复制、展开）与展开代码框
               if (!cmdStep.querySelector('.claude-step-actions')) {
                 const actionGroup = document.createElement('div');
                 actionGroup.className = 'claude-step-actions';
                 actionGroup.innerHTML = `
                   <button type="button" class="claude-step-btn claude-btn-copy" data-cmd="${rawCmd.replace(/"/g, '&quot;')}" title="复制原始命令">复制</button>
-                  <button type="button" class="claude-step-btn claude-btn-expand" title="展开/收起完整命令">展开</button>
+                  <button type="button" class="claude-step-btn claude-btn-expand" title="展开完整命令">展开</button>
                 `;
                 const stepHeader = cmdStep.querySelector('[role="button"]') || cmdStep.children[0];
                 if (stepHeader) {
@@ -429,7 +490,6 @@
               sig = 'other:' + row.textContent.trim().slice(0, 60);
             }
 
-            // 连续相同调用合并为 "×N"
             if (sig && sig === prevSig) {
               dupCount++;
               row.classList.add('claude-merged-row');
@@ -455,7 +515,7 @@
         }
       });
 
-      // 扫描并汉化本轮中的状态标签（如 Edited、Searching、Worked for 等）
+      // 扫描状态文字
       const statusSpans = turn.querySelectorAll('span, button');
       statusSpans.forEach((sp) => {
         if (sp.children.length === 0 && sp.textContent) {
@@ -470,9 +530,29 @@
       });
     });
 
-    // 全局即时扫描并汉化动态微文字（如 Working / Thinking / Running）
+    // 扫描输入框顶部运行中任务抽屉
+    const runningPanel = document.querySelector('[data-testid="running-items-panel"]');
+    if (runningPanel) {
+      const panelBtnSpan = runningPanel.querySelector('button span');
+      if (panelBtnSpan && panelBtnSpan.textContent) {
+        const trans = translateChinese(panelBtnSpan.textContent.trim());
+        if (panelBtnSpan.textContent !== trans) {
+          panelBtnSpan.textContent = trans;
+        }
+      }
+    }
+
+    // 动态全局微文字汉化 (严格排除脚本与样式节点)
     try {
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+          const p = node.parentElement;
+          if (!p || p.tagName === 'SCRIPT' || p.tagName === 'STYLE' || p.tagName === 'HEAD' || p.tagName === 'TITLE') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
       let node;
       while ((node = walker.nextNode())) {
         const val = node.nodeValue?.trim();
@@ -482,12 +562,14 @@
           node.nodeValue = node.nodeValue.replace(/Thinking/i, '思考中');
         } else if (val && /^Running\.*/i.test(val)) {
           node.nodeValue = node.nodeValue.replace(/Running/i, '执行中');
+        } else if (val && /\d+\s*tasks?\s*running/i.test(val)) {
+          node.nodeValue = translateChinese(val);
         }
       }
     } catch (e) {}
   }
 
-  // D. 实时响应 MutationObserver（毫秒级监听流式输出与工具调用）
+  // 7. 实时监听器
   let dockDebounceTimer = null;
   function setupDockObserver() {
     const convView = document.querySelector('[data-testid="conversation-view"]');
@@ -496,7 +578,7 @@
 
     const observer = new MutationObserver(() => {
       clearTimeout(dockDebounceTimer);
-      dockDebounceTimer = setTimeout(processThoughtAndToolDocks, 40);
+      dockDebounceTimer = setTimeout(processThoughtAndToolDocks, 50);
     });
 
     observer.observe(convView, {
@@ -507,7 +589,7 @@
   }
 
   // =========================================================================
-  // E. 文件单机即开 + 右键访达/复制上下文菜单 (File Click & Finder Context Menu)
+  // 8. 文件单击即开 + Apple 级原质毛玻璃上下文菜单
   // =========================================================================
   let activeContextMenu = null;
 
@@ -524,11 +606,8 @@
     if (str.startsWith('http://') || str.startsWith('https://')) return false;
     if (str.startsWith('/c/') || str.startsWith('/projects') || str.startsWith('/?') || str === '#' || str === '/' || str === '\\') return false;
     if (str.startsWith('file://')) return true;
-    // Unix / macOS 绝对路径
     if (str.startsWith('/Users/') || str.startsWith('/System/') || str.startsWith('/Applications/') || str.startsWith('/Library/') || str.startsWith('/private/')) return true;
-    // Windows 盘符绝对路径 (C:\... 或 C:/...) 或 UNC 路径
     if (/^[a-zA-Z]:[\\/]/.test(str) || /^\\\\[a-zA-Z0-9_-]+[\\/]/.test(str)) return true;
-    // 带有明确文件后缀的路径 (POSIX 或 Windows)
     if ((str.startsWith('/') || str.startsWith('\\') || /^[a-zA-Z]:/.test(str)) && /\.[a-zA-Z0-9_-]{1,10}(#.*)?$/.test(str)) return true;
     return false;
   }
@@ -567,12 +646,10 @@
       displayPath = decodeURIComponent(cleanPath);
     } catch (e) {}
 
-    // Windows 盘符处理：去掉开头的 /C:/ -> C:/
     if (/^\/[a-zA-Z]:[\\/]/.test(displayPath)) {
       displayPath = displayPath.slice(1);
     }
 
-    // Windows 系统下转换为本地反斜杠路径
     const isWindows = typeof navigator !== 'undefined' && (/win/i.test(navigator.platform) || /win/i.test(navigator.userAgent));
     if (isWindows && /^[a-zA-Z]:\//.test(displayPath)) {
       displayPath = displayPath.replace(/\//g, '\\');
@@ -659,18 +736,15 @@
       const action = item.getAttribute('data-action');
       if (action === 'open') {
         removeContextMenu();
-        window.__claude_last_file_action = { action: 'menu_open', uri: fileInfo.cleanUri, time: Date.now() };
         if (window.electronNative?.openExternal) {
           window.electronNative.openExternal(fileInfo.cleanUri).catch(() => {});
         }
       } else if (action === 'reveal') {
         removeContextMenu();
-        window.__claude_last_file_action = { action: 'reveal', uri: fileInfo.cleanUri, time: Date.now() };
         if (window.electronNative?.revealInFilePicker) {
           window.electronNative.revealInFilePicker(fileInfo.cleanUri).catch(() => {});
         }
       } else if (action === 'copy-path') {
-        window.__claude_last_file_action = { action: 'copy_path', path: fileInfo.displayPath, time: Date.now() };
         try {
           if (navigator.clipboard?.writeText) {
             await navigator.clipboard.writeText(fileInfo.displayPath);
@@ -684,12 +758,11 @@
           }
           const textSpan = item.querySelector('.claude-fcm-text');
           if (textSpan) textSpan.textContent = '已复制路径 ✓';
-          setTimeout(() => removeContextMenu(), 500);
+          setTimeout(() => removeContextMenu(), 450);
         } catch (err) {
           removeContextMenu();
         }
       } else if (action === 'copy-name') {
-        window.__claude_last_file_action = { action: 'copy_name', name: fileInfo.fileName, time: Date.now() };
         try {
           if (navigator.clipboard?.writeText) {
             await navigator.clipboard.writeText(fileInfo.fileName);
@@ -703,7 +776,7 @@
           }
           const textSpan = item.querySelector('.claude-fcm-text');
           if (textSpan) textSpan.textContent = '已复制名称 ✓';
-          setTimeout(() => removeContextMenu(), 500);
+          setTimeout(() => removeContextMenu(), 450);
         } catch (err) {
           removeContextMenu();
         }
@@ -712,7 +785,6 @@
   }
 
   function setupFileInteractions() {
-    // 1. 左键单击：直接调用系统默认程序打开文件
     const handleClick = (e) => {
       if (e.button !== 0) return;
       if (e.target.closest('#claude-file-context-menu')) return;
@@ -724,20 +796,15 @@
         e.stopImmediatePropagation();
         removeContextMenu();
 
-        // 触感反馈微动效
         fileInfo.element.classList.add('claude-file-active-click');
         setTimeout(() => fileInfo.element.classList.remove('claude-file-active-click'), 200);
 
-        window.__claude_last_file_action = { action: 'click_open', uri: fileInfo.cleanUri, time: Date.now() };
         if (window.electronNative?.openExternal) {
-          window.electronNative.openExternal(fileInfo.cleanUri).catch((err) => {
-            console.warn('[ClaudeEnhancer] Failed to open external file:', err);
-          });
+          window.electronNative.openExternal(fileInfo.cleanUri).catch(() => {});
         }
       }
     };
 
-    // 2. 右键单击：弹出原质上下文菜单（含“在访达中显示 / 打开所在文件夹”）
     const handleContextMenu = (e) => {
       const fileInfo = extractFileInfo(e.target);
       if (fileInfo) {
@@ -750,7 +817,6 @@
       }
     };
 
-    // 3. 点击外部、滚动、按 Esc 自动关闭菜单
     const handleGlobalClick = (e) => {
       if (!e.target.closest('#claude-file-context-menu')) {
         removeContextMenu();
@@ -785,19 +851,17 @@
     };
   }
 
-  // 注册全局清理函数以支持热更新
   if (window.__claude_file_handlers_cleanup) {
     window.__claude_file_handlers_cleanup();
   }
   window.__claude_file_handlers_cleanup = setupFileInteractions();
 
-  // 暴露给注入进程热更新调用
   window.__claude_render_recents = renderRecents;
   window.__claude_process_docks = processThoughtAndToolDocks;
 
   function tick() {
     hookNewChat();
-    renameHeaders();
+    refineNavigationAndHeaders();
     renderRecents();
     hidePromoButtons();
     processThoughtAndToolDocks();
@@ -807,5 +871,3 @@
   window.__claude_enhancer_interval = setInterval(tick, 600);
   tick();
 })();
-
-

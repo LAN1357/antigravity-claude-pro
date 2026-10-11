@@ -1,20 +1,24 @@
 /**
- * @name Claude Minimal for Antigravity 2.x (Neutral Apple Typography Edition)
+ * @name Claude Antigravity Awwwards / FWA Design System
  * @description
- *   - 页面背景：中性微暖调 #FAFAF8
- *   - 表面/卡片：纯白 #FFFFFF
- *   - 侧边栏：柔和浅灰 #F4F4F1，选中会话项 #E2E2DE（中性灰无米黄色）
- *   - 输入框：16px 圆角，通过 .bg-card-border 背景色呈现无光晕 1px 细线，聚焦时加深边框灰 #B8B6B0
- *   - 强调色：陶土橙 #D97757 严格限定于发送按钮与对话区链接
- *   - 代码/表格：中性灰底色 #F1F0EC，无偏黄残留
- *   - 正文字体：采用苹果官方原生黑体（PingFang SC / SF Pro），清晰高可读性，强对比黑体加粗
+ *   Exquisite, award-winning UI/UX for Google Antigravity 2.x desktop client.
+ *   Crafted according to Apple Human Interface Guidelines (WWDC 2018/2020/2026),
+ *   Awwwards Site of the Day / FWA standards, and cursor.directory high-craft principles.
+ *
+ *   Key Dimensions:
+ *   - Editorial Warm Parchment (#FAF9F5) with Optical White floating surfaces
+ *   - Multimodal Depth & Specular Lighting (Layered Translucent Materials & Hairlines)
+ *   - Apple Fluid Spring Physics (Interruptible, Zero-Latency Pointer Feedback)
+ *   - Optical Typography (PingFang SC & SF Pro with Negative Display Tracking & Tabular Nums)
+ *   - Claude Terracotta Accent (#DA7756) strictly restrained for focal actions
+ *   - Refined Frosted Glass Chrome (Replacing generic update pills & clunky borders)
  */
 
 /* ==========================================================================
-   1. 系统自带字体定义（采用苹果官方最佳黑体栈，零外网依赖）
+   1. 系统自带精选字体栈（全离线零外部网络依赖）
    ========================================================================== */
 :root {
-  --cm-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --cm-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
   --cm-mono: ui-monospace, "SF Mono", "Cascadia Code", "Cascadia Mono", "Segoe UI Mono", Menlo, Monaco, Consolas, monospace;
 
   /* 覆盖 Antigravity 原生字体变量 */
@@ -24,10 +28,15 @@
   --default-mono-font-family: var(--cm-mono) !important;
   --editor-font-family: var(--cm-mono) !important;
   --vscode-font-family: var(--cm-mono) !important;
+
+  /* 统一弹性物理缓动参数 (Apple Spring Response 0.35s, Critical Damped 1.0) */
+  --spring-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --hover-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* ==========================================================================
-   2. 浅色模式语义变量与原生 Tailwind v4 变量覆盖
+   2. 浅色模式高定语义变量 (Claude Editorial Warmth + Apple Translucency)
    ========================================================================== */
 :root:not(.dark):not([data-theme="dark"]),
 html:not(.dark):not([data-theme="dark"]),
@@ -36,62 +45,87 @@ body:not(.dark):not([data-theme="dark"]),
 .vscode-light,
 html.light,
 [data-theme="light"] {
-  /* 用户统一设计规范变量（中性仅微弱暖调） */
-  --bg: #fafaf8;            /* 页面全局背景 */
-  --surface: #ffffff;       /* 输入框、卡片、浮层底色 */
-  --sidebar: #f4f4f1;       /* 侧边栏底色 */
-  --sidebar-muted: #ebebe8; /* 侧边栏 Hover 悬浮态 */
-  --sidebar-active: #e2e2de;/* 侧边栏选中项底色（中性灰） */
-  --border: #e6e5e0;        /* 边框、分割线、表格边线 */
-  --border-focus: #b8b6b0;  /* 聚焦态加深边框色（比 border 深一档） */
-  --muted: #f1f0ec;         /* 代码块底色、表格表头底色（消除米黄） */
-  --text: #2b2b28;          /* 正文常规文字 */
-  --text-bold: #111110;     /* 突出黑体加粗文字（高对比纯正黑） */
-  --text-muted: #7a7974;    /* 次要说明文字 */
-  --accent: #d97757;        /* 品牌强调色：陶土橙（仅用于发送按钮与链接） */
+  /* 基础底色系统：极具典雅质感的暖调自然纸白 */
+  --bg: #faf9f5;
+  --surface: #ffffff;
+  --surface-translucent: rgba(255, 255, 255, 0.82);
+  --surface-elevated: #ffffff;
+  --surface-quote: #f5f3ec;
+  --sidebar: #f3f2ec;
+  --sidebar-muted: rgba(0, 0, 0, 0.04);
+  --sidebar-active: #e6e4dc;
 
-  /* ---------- 精确覆盖 Antigravity 原生 Tailwind 变量 ---------- */
-  --background: #fafaf8 !important;
-  --color-background: #fafaf8 !important;
+  /* 1px 发丝边框与环境高光 */
+  --border: #e5e3dc;
+  --border-subtle: rgba(0, 0, 0, 0.055);
+  --border-focus: #b8b5ab;
+  --border-highlight: rgba(255, 255, 255, 0.85);
+
+  /* 背景容器与次要区域底色 */
+  --muted: #f2f1ea;
+  --muted-hover: #ebe9e1;
+
+  /* 阶梯文本色彩（严格遵循光学可读性对比） */
+  --text: #2a2926;
+  --text-bold: #121211;
+  --text-muted: #7a7871;
+  --text-subtle: #9e9c94;
+
+  /* 品牌灵魂强调色：陶土橙 (Claude Terracotta) */
+  --accent: #da7756;
+  --accent-hover: #c56545;
+  --accent-active: #b35637;
+  --accent-subtle: rgba(218, 119, 86, 0.12);
+  --accent-ring: rgba(218, 119, 86, 0.22);
+
+  /* Awwwards 级多层环境漫反射阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 16px -2px rgba(0, 0, 0, 0.02);
+  --shadow-dock: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 12px 36px -6px rgba(0, 0, 0, 0.07);
+  --shadow-dock-focus: 0 8px 30px -4px rgba(0, 0, 0, 0.08), 0 20px 48px -8px rgba(0, 0, 0, 0.11);
+  --shadow-popover: 0 16px 40px -8px rgba(0, 0, 0, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+
+  /* ---------- 覆盖 Antigravity 原生 Tailwind 变量 ---------- */
+  --background: #faf9f5 !important;
+  --color-background: #faf9f5 !important;
 
   --card: #ffffff !important;
   --color-card: #ffffff !important;
   --popover: #ffffff !important;
 
-  --sidebar: #f4f4f1 !important;
-  --color-sidebar: #f4f4f1 !important;
-  --sidebar-secondary: #e2e2de !important;
-  --color-sidebar-secondary: #e2e2de !important;
-  --sidebar-muted: #ebebe8 !important;
-  --color-sidebar-muted: #ebebe8 !important;
+  --sidebar: #f3f2ec !important;
+  --color-sidebar: #f3f2ec !important;
+  --sidebar-secondary: #e6e4dc !important;
+  --color-sidebar-secondary: #e6e4dc !important;
+  --sidebar-muted: rgba(0, 0, 0, 0.04) !important;
+  --color-sidebar-muted: rgba(0, 0, 0, 0.04) !important;
 
-  --secondary: #f1f0ec !important;
-  --color-secondary: #f1f0ec !important;
-  --secondary-foreground: #2b2b28 !important;
-  --color-secondary-foreground: #2b2b28 !important;
+  --secondary: #f2f1ea !important;
+  --color-secondary: #f2f1ea !important;
+  --secondary-foreground: #2a2926 !important;
+  --color-secondary-foreground: #2a2926 !important;
 
-  --muted: #f1f0ec !important;
-  --color-muted: #f1f0ec !important;
-  --muted-foreground: #7a7974 !important;
-  --color-muted-foreground: #7a7974 !important;
+  --muted: #f2f1ea !important;
+  --color-muted: #f2f1ea !important;
+  --muted-foreground: #7a7871 !important;
+  --color-muted-foreground: #7a7871 !important;
 
-  --border: #e6e5e0 !important;
-  --color-border: #e6e5e0 !important;
-  --card-border: #e6e5e0 !important;
-  --color-card-border: #e6e5e0 !important;
+  --border: #e5e3dc !important;
+  --color-border: #e5e3dc !important;
+  --card-border: #e5e3dc !important;
+  --color-card-border: #e5e3dc !important;
 
-  --foreground: #2b2b28 !important;
-  --color-foreground: #2b2b28 !important;
-  --placeholder: #7a7974 !important;
-  --color-placeholder: #7a7974 !important;
+  --foreground: #2a2926 !important;
+  --color-foreground: #2a2926 !important;
+  --placeholder: #8c8a82 !important;
+  --color-placeholder: #8c8a82 !important;
 
-  /* 消除全局意外继承导致的橙色外圈 */
   --ring: transparent !important;
   --focus-ring-color: transparent !important;
 }
 
 /* ==========================================================================
-   3. 深色模式（中性深色阶梯）
+   3. 深色模式高定语义变量 (Obsidian Slate + Specular Hairlines)
    ========================================================================== */
 :root.dark,
 html.dark,
@@ -100,116 +134,79 @@ body.dark,
 .theme-dark,
 .vscode-dark,
 [data-theme="dark"] {
-  --bg: #212121;
-  --surface: #2a2a2a;
-  --sidebar: #1b1b1b;
-  --sidebar-muted: #262626;
-  --sidebar-active: #333333;
-  --border: #3a3a3a;
-  --border-focus: #555555;
-  --muted: #282828;
-  --text: #e6e6e6;
+  --bg: #151514;
+  --surface: #1e1e1c;
+  --surface-translucent: rgba(30, 30, 28, 0.85);
+  --surface-elevated: #242422;
+  --surface-quote: #222220;
+  --sidebar: #111110;
+  --sidebar-muted: rgba(255, 255, 255, 0.055);
+  --sidebar-active: #292927;
+
+  --border: #2e2e2b;
+  --border-subtle: rgba(255, 255, 255, 0.075);
+  --border-focus: #52524e;
+  --border-highlight: rgba(255, 255, 255, 0.12);
+
+  --muted: #222220;
+  --muted-hover: #2b2b28;
+
+  --text: #eceae4;
   --text-bold: #ffffff;
-  --text-muted: #999999;
-  --accent: #d97757;
+  --text-muted: #95938b;
+  --text-subtle: #6e6c66;
 
-  --background: #212121 !important;
-  --color-background: #212121 !important;
-  --card: #2a2a2a !important;
-  --color-card: #2a2a2a !important;
-  --popover: #2a2a2a !important;
+  --accent: #da7756;
+  --accent-hover: #e48667;
+  --accent-active: #f09577;
+  --accent-subtle: rgba(218, 119, 86, 0.18);
+  --accent-ring: rgba(218, 119, 86, 0.3);
 
-  --sidebar: #1b1b1b !important;
-  --color-sidebar: #1b1b1b !important;
-  --sidebar-secondary: #333333 !important;
-  --color-sidebar-secondary: #333333 !important;
-  --sidebar-muted: #262626 !important;
-  --color-sidebar-muted: #262626 !important;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px -2px rgba(0, 0, 0, 0.4);
+  --shadow-dock: 0 4px 24px -2px rgba(0, 0, 0, 0.45), 0 16px 40px -6px rgba(0, 0, 0, 0.65);
+  --shadow-dock-focus: 0 8px 32px -4px rgba(0, 0, 0, 0.55), 0 24px 56px -8px rgba(0, 0, 0, 0.75);
+  --shadow-popover: 0 16px 40px -8px rgba(0, 0, 0, 0.65), 0 4px 12px -2px rgba(0, 0, 0, 0.45);
 
-  --secondary: #282828 !important;
-  --color-secondary: #282828 !important;
-  --secondary-foreground: #e6e6e6 !important;
-  --color-secondary-foreground: #e6e6e6 !important;
+  --background: #151514 !important;
+  --color-background: #151514 !important;
+  --card: #1e1e1c !important;
+  --color-card: #1e1e1c !important;
+  --popover: #1e1e1c !important;
 
-  --muted: #282828 !important;
-  --color-muted: #282828 !important;
-  --muted-foreground: #999999 !important;
-  --color-muted-foreground: #999999 !important;
+  --sidebar: #111110 !important;
+  --color-sidebar: #111110 !important;
+  --sidebar-secondary: #292927 !important;
+  --color-sidebar-secondary: #292927 !important;
+  --sidebar-muted: rgba(255, 255, 255, 0.055) !important;
+  --color-sidebar-muted: rgba(255, 255, 255, 0.055) !important;
 
-  --border: #3a3a3a !important;
-  --color-border: #3a3a3a !important;
-  --card-border: #3a3a3a !important;
-  --color-card-border: #3a3a3a !important;
+  --secondary: #222220 !important;
+  --color-secondary: #222220 !important;
+  --secondary-foreground: #eceae4 !important;
+  --color-secondary-foreground: #eceae4 !important;
 
-  --foreground: #e6e6e6 !important;
-  --color-foreground: #e6e6e6 !important;
-  --placeholder: #999999 !important;
-  --color-placeholder: #999999 !important;
+  --muted: #222220 !important;
+  --color-muted: #222220 !important;
+  --muted-foreground: #95938b !important;
+  --color-muted-foreground: #95938b !important;
+
+  --border: #2e2e2b !important;
+  --color-border: #2e2e2b !important;
+  --card-border: #2e2e2b !important;
+  --color-card-border: #2e2e2b !important;
+
+  --foreground: #eceae4 !important;
+  --color-foreground: #eceae4 !important;
+  --placeholder: #6e6c66 !important;
+  --color-placeholder: #6e6c66 !important;
 
   --ring: transparent !important;
   --focus-ring-color: transparent !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light):not(.theme-light):not(.vscode-light):not([data-theme="light"]),
-  .dark,
-  .theme-dark,
-  .vscode-dark,
-  html.dark,
-  [data-theme="dark"] {
-    --bg: #212121;
-    --surface: #2a2a2a;
-    --sidebar: #1b1b1b;
-    --sidebar-muted: #262626;
-    --sidebar-active: #333333;
-    --border: #3a3a3a;
-    --border-focus: #555555;
-    --muted: #282828;
-    --text: #e6e6e6;
-    --text-bold: #ffffff;
-    --text-muted: #999999;
-    --accent: #d97757;
-
-    --background: #212121 !important;
-    --color-background: #212121 !important;
-    --card: #2a2a2a !important;
-    --color-card: #2a2a2a !important;
-    --popover: #2a2a2a !important;
-
-    --sidebar: #1b1b1b !important;
-    --color-sidebar: #1b1b1b !important;
-    --sidebar-secondary: #333333 !important;
-    --color-sidebar-secondary: #333333 !important;
-    --sidebar-muted: #262626 !important;
-    --color-sidebar-muted: #262626 !important;
-
-    --secondary: #282828 !important;
-    --color-secondary: #282828 !important;
-    --secondary-foreground: #e6e6e6 !important;
-    --color-secondary-foreground: #e6e6e6 !important;
-
-    --muted: #282828 !important;
-    --color-muted: #282828 !important;
-    --muted-foreground: #999999 !important;
-    --color-muted-foreground: #999999 !important;
-
-    --border: #3a3a3a !important;
-    --color-border: #3a3a3a !important;
-    --card-border: #3a3a3a !important;
-    --color-card-border: #3a3a3a !important;
-
-    --foreground: #e6e6e6 !important;
-    --color-foreground: #e6e6e6 !important;
-    --placeholder: #999999 !important;
-    --color-placeholder: #999999 !important;
-
-    --ring: transparent !important;
-    --focus-ring-color: transparent !important;
-  }
-}
-
 /* ==========================================================================
-   4. 全局字体与排版（与参考图一致的现代苹方黑体、清晰对比加粗）
+   4. 全局排版与文字光学微调 (Apple Typography & Optical Readability)
    ========================================================================== */
 html,
 body {
@@ -217,10 +214,12 @@ body {
   background-color: var(--background) !important;
   color: var(--foreground) !important;
   -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
   text-rendering: optimizeLegibility !important;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11" !important;
 }
 
-/* 对话正文：现代清晰黑体（苹方），常规字重 400 */
+/* 对话正文：极佳阅读韵律 (Claude Editorial Rhythm) */
 [data-testid="conversation-view"] p,
 [data-testid="conversation-view"] li,
 [data-testid="conversation-view"] blockquote,
@@ -235,14 +234,14 @@ body {
 .notebook-markdown-cell p,
 .notebook-markdown-cell li {
   font-family: var(--cm-sans) !important;
-  font-weight: 400 !important; /* 强制常规字重，防止被外层样式误染为半粗体 */
+  font-weight: 400 !important;
   font-size: 15px !important;
-  line-height: 1.68 !important;
+  line-height: 1.72 !important;
   color: var(--text) !important;
-  letter-spacing: -0.01em !important;
+  letter-spacing: -0.006em !important;
 }
 
-/* 核心修复：加粗文本（strong/b）使用 PingFang SC 真实加粗（600/700）+ 极深对比字色，醒目突出 */
+/* 核心加粗：自然饱满的 600 字重，绝对醒目清晰 */
 strong,
 b,
 [data-testid="conversation-view"] strong,
@@ -254,41 +253,75 @@ b,
   color: var(--text-bold) !important;
 }
 
-/* 标题样式：清晰醒目，与参考图一致的饱满黑体标题 */
-h1, h2, h3, h4, h5, h6,
-[class*="markdown"] h1,
-[class*="markdown"] h2,
-[class*="markdown"] h3,
-[class*="markdown"] h4 {
+/* 标题系统：负向字偶距光学紧缩 (Optical Tracking Tightening) */
+h1, [class*="markdown"] h1 {
   font-family: var(--cm-sans) !important;
+  font-size: 1.6rem !important;
+  font-weight: 650 !important;
+  color: var(--text-bold) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.024em !important;
+  margin-top: 1.6rem !important;
+  margin-bottom: 0.8rem !important;
+}
+
+h2, [class*="markdown"] h2 {
+  font-family: var(--cm-sans) !important;
+  font-size: 1.35rem !important;
+  font-weight: 620 !important;
+  color: var(--text-bold) !important;
+  line-height: 1.32 !important;
+  letter-spacing: -0.02em !important;
+  margin-top: 1.4rem !important;
+  margin-bottom: 0.6rem !important;
+}
+
+h3, [class*="markdown"] h3 {
+  font-family: var(--cm-sans) !important;
+  font-size: 1.15rem !important;
   font-weight: 600 !important;
   color: var(--text-bold) !important;
   line-height: 1.4 !important;
   letter-spacing: -0.015em !important;
+  margin-top: 1.2rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
-/* 列表符号与间距微调 */
-[data-testid="conversation-view"] ul,
-.prose ul {
-  padding-left: 1.25rem !important;
-}
-[data-testid="conversation-view"] li,
-.prose li {
-  margin-top: 0.35rem !important;
-  margin-bottom: 0.35rem !important;
+h4, h5, h6 {
+  font-family: var(--cm-sans) !important;
+  font-weight: 600 !important;
+  color: var(--text-bold) !important;
+  letter-spacing: -0.01em !important;
 }
 
-/* 链接限定仅在对话内容区着色 */
+/* 引用块：典雅的陶土橙侧边标线与温润微底色 */
+blockquote,
+.prose blockquote {
+  border-left: 3px solid var(--accent) !important;
+  background-color: var(--muted) !important;
+  padding: 8px 16px !important;
+  border-radius: 0 10px 10px 0 !important;
+  margin: 1rem 0 !important;
+  color: var(--text) !important;
+}
+
+/* 正文超链接：克制的陶土橙色与优雅下划线下沉 */
 [data-testid="conversation-view"] a,
 .prose a,
-[class*="prose"] a,
-.notebook-markdown-cell a {
+[class*="prose"] a {
   color: var(--accent) !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(218, 119, 86, 0.4) !important;
+  text-underline-offset: 3.5px !important;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease !important;
+}
+[data-testid="conversation-view"] a:hover,
+.prose a:hover {
+  text-decoration-color: var(--accent) !important;
+  color: var(--accent-hover) !important;
 }
 
-/* 代码统一为 SF Mono */
+/* 代码统一为 SF Mono / Cascadia Code */
 code,
 pre,
 kbd,
@@ -297,141 +330,246 @@ samp,
 .xterm,
 .code-block {
   font-family: var(--cm-mono) !important;
+  font-feature-settings: normal !important;
 }
 
 /* ==========================================================================
-   5. 底部输入框净化（清除一切外圈与发光，用原生 .bg-card-border 背景呈边框）
+   5. 顶部标题栏与统一视窗镀铬 (Header & Unified Chrome)
    ========================================================================== */
-/* 清除外层多余的包裹层边框与阴影 */
-div:has(> [id="antigravity.agentSidePanelInputBox"]),
-.flex.flex-col.w-full.shrink-0:has([id="antigravity.agentSidePanelInputBox"]) {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
-  background: transparent !important;
-}
-
-/* 输入框最外层容器：不加额外 border，用背景色透过 p-px 呈现 1px 细线 */
-[id="antigravity.agentSidePanelInputBox"] {
-  border: none !important;
-  border-radius: 16px !important;
-  background-color: var(--border) !important; /* 常态边框颜色 */
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
-  animation: none !important;
-  transition: background-color 0.15s ease !important;
-}
-
-/* 聚焦态：边框颜色通过加深背景色为 --border-focus 实现，绝无橙色与光晕 */
-[id="antigravity.agentSidePanelInputBox"]:focus-within {
-  background-color: var(--border-focus) !important;
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
-}
-
-/* 输入框内层表面卡片：纯白背景，清除内部任何边框与阴影 */
-[id="antigravity.agentSidePanelInputBox"] > .bg-card,
-[id="antigravity.agentSidePanelInputBox"] .bg-card {
-  background-color: var(--surface) !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* 仅针对输入框内的可交互元素清除 outline，不影响全局其他元素 */
-[id="antigravity.agentSidePanelInputBox"] textarea,
-[id="antigravity.agentSidePanelInputBox"] [contenteditable],
-[id="antigravity.agentSidePanelInputBox"] input,
-[id="antigravity.agentSidePanelInputBox"] *:hover,
-[id="antigravity.agentSidePanelInputBox"] *:focus,
-[id="antigravity.agentSidePanelInputBox"] *:active {
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
-}
-
-/* 精确匹配发送按钮（基于 data-testid 与 aria-label） */
-[id="antigravity.agentSidePanelInputBox"] [data-testid="send-button"],
-[id="antigravity.agentSidePanelInputBox"] button[aria-label="Send message"] {
-  background-color: var(--accent) !important;
-  color: #ffffff !important;
-}
-
-/* ==========================================================================
-   6. 真实类名精准调色（消除偏黄残留）
-   ========================================================================== */
-/* 表格表头（使用探测到的类名） */
-table.min-w-full th,
-th.bg-secondary {
-  background-color: var(--muted) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-table.min-w-full td {
-  border-color: var(--border) !important;
-}
-
-/* 代码块（使用探测到的类名） */
-pre,
-div.relative.rounded-xl.bg-muted.border,
-div.relative.whitespace-pre-wrap.rounded-xl.bg-muted.border,
-.code-block {
-  background-color: var(--muted) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-:not(pre) > code,
-code.whitespace-pre-wrap {
-  background-color: var(--muted) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text) !important;
-  border-radius: 5px !important;
-}
-
-/* 侧边栏当前选中的会话项（使用探测到的类名） */
-[data-testid="conversation-row-sidebar"][data-selected="true"],
-[data-testid="conversation-row-sidebar"].bg-sidebar-secondary {
-  background-color: var(--sidebar-active) !important;
-  color: var(--text) !important;
-}
-
-/* 顶部栏与侧边栏分割边界 */
+/* 顶部菜单栏与拖拽区 */
+[data-testid="title-menu-bar"],
 header,
-[data-testid="conversation-list-sidebar"] {
+div.flex.items-center:has([data-testid="app-update-button"]) {
+  background-color: var(--sidebar) !important;
+  border-bottom: 1px solid var(--border) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* 顶部菜单项按钮 (Antigravity, File, View, Window) */
+button[data-testid="title-menu-bar-item"] {
+  font-family: var(--cm-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 450 !important;
+  border-radius: 6px !important;
+  padding: 2px 7px !important;
+  color: var(--text-muted) !important;
+  transition: all 0.12s var(--spring-ease) !important;
+}
+button[data-testid="title-menu-bar-item"]:hover {
+  background-color: var(--sidebar-muted) !important;
+  color: var(--text-bold) !important;
+}
+button[data-testid="title-menu-bar-item"]:active {
+  transform: scale(0.96) !important;
+}
+
+/* 核心革新：将突兀的高饱和电光蓝更新按钮重构为 Apple 级典雅晶透胶囊 */
+div[role="button"][data-testid="app-update-button"] {
+  background: var(--accent-subtle) !important;
+  color: var(--accent) !important;
+  border: 1px solid rgba(218, 119, 86, 0.3) !important;
+  box-shadow: 0 1px 4px rgba(218, 119, 86, 0.1) !important;
+  font-family: var(--cm-sans) !important;
+  font-weight: 550 !important;
+  font-size: 11.5px !important;
+  letter-spacing: -0.01em !important;
+  padding: 3px 10px !important;
+  border-radius: 9999px !important;
+  transition: all 0.18s var(--spring-ease) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+div[role="button"][data-testid="app-update-button"]:hover {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 2px 10px rgba(218, 119, 86, 0.35) !important;
+  transform: translateY(-0.5px) !important;
+}
+div[role="button"][data-testid="app-update-button"]:active {
+  transform: scale(0.95) !important;
+}
+
+/* 顶部面包屑与路径栏 */
+div.flex.items-center:has(> div > [data-testid="breadcrumb-segment"]) {
+  font-family: var(--cm-sans) !important;
+}
+
+/* 工作区前缀药丸 (antigravity) */
+div.flex.items-center.min-w-0.shrink-\[2\] [data-testid="breadcrumb-segment"] {
+  font-family: var(--cm-sans) !important;
+  font-weight: 550 !important;
+  font-size: 12px !important;
+  color: var(--text-muted) !important;
+  background-color: var(--muted) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 6px !important;
+  padding: 1px 7px !important;
+  height: 22px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  transition: all 0.12s var(--spring-ease) !important;
+}
+div.flex.items-center.min-w-0.shrink-\[2\] [data-testid="breadcrumb-segment"]:hover {
+  background-color: var(--sidebar-active) !important;
+  color: var(--text-bold) !important;
   border-color: var(--border) !important;
 }
 
-/* ==========================================================================
-   7. 侧边栏项目列表紧凑化与加粗（Section 2: 项目）
-   ========================================================================== */
-button[data-project-card="true"] {
-  height: 28px !important;
-  padding-top: 1px !important;
-  padding-bottom: 1px !important;
+/* 分隔斜杠 */
+span.-translate-y-px {
+  opacity: 0.3 !important;
+  margin: 0 4px !important;
 }
 
-button[data-project-card="true"] span.truncate {
+/* 当前会话标题面包屑 */
+div.flex.items-center.min-w-0:not(.shrink-\[2\]) [data-testid="breadcrumb-segment"] {
   font-family: var(--cm-sans) !important;
   font-weight: 600 !important;
-  color: var(--text-bold) !important;
   font-size: 13.5px !important;
-  letter-spacing: -0.01em !important;
+  color: var(--text-bold) !important;
+  letter-spacing: -0.015em !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+}
+div.flex.items-center.min-w-0:not(.shrink-\[2\]) [data-testid="breadcrumb-segment"]:hover {
+  background-color: var(--muted) !important;
 }
 
-div[data-index]:has(button[data-project-card="true"]) {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
+/* 顶部右侧辅助操作按钮 (更多、折叠侧栏) */
+button[data-testid="titlebar-more-actions"],
+button[data-testid="toggle-aux-sidebar"],
+button[data-testid="sidebar-toggle"],
+button[data-testid="sidebar-search-button"] {
+  border-radius: 7px !important;
+  transition: all 0.12s var(--spring-ease) !important;
+}
+button[data-testid="titlebar-more-actions"]:hover,
+button[data-testid="toggle-aux-sidebar"]:hover,
+button[data-testid="sidebar-toggle"]:hover,
+button[data-testid="sidebar-search-button"]:hover {
+  background-color: var(--sidebar-muted) !important;
+  color: var(--text-bold) !important;
+}
+button[data-testid="titlebar-more-actions"]:active,
+button[data-testid="toggle-aux-sidebar"]:active,
+button[data-testid="sidebar-toggle"]:active,
+button[data-testid="sidebar-search-button"]:active {
+  transform: scale(0.94) !important;
 }
 
 /* ==========================================================================
-   8. 侧边栏最近对话列表（Section 3: 最近，平滑折叠 + 高亮标识）
+   6. 侧边栏高定重塑 (Left Sidebar & Navigation Architecture)
+   ========================================================================== */
+aside,
+[data-testid="conversation-list-sidebar"] {
+  background-color: var(--sidebar) !important;
+  border-right-color: var(--border) !important;
+}
+
+/* "+ 新建对话" 核心动作按钮：Apple 级内凹微阴影与温润纯白立体质感 */
+[data-testid="new-conversation-button"] {
+  border-radius: 9px !important;
+  border: 1px solid var(--border) !important;
+  background-color: var(--surface) !important;
+  color: var(--text-bold) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), inset 0 1px 0 var(--border-highlight) !important;
+  font-family: var(--cm-sans) !important;
+  font-weight: 550 !important;
+  font-size: 13px !important;
+  letter-spacing: -0.01em !important;
+  padding: 0 10px !important;
+  height: 32px !important;
+  transition: all 0.16s var(--spring-ease) !important;
+}
+[data-testid="new-conversation-button"]:hover {
+  background-color: var(--surface) !important;
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 var(--border-highlight) !important;
+  transform: translateY(-0.5px) !important;
+}
+[data-testid="new-conversation-button"]:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* 侧边栏导航条目 (Conversation History, Automations, Customizations, Settings) */
+[data-testid="automations-button"],
+[data-testid="settings-button"],
+a[href*="/history"],
+a[href*="/customizations"] {
+  font-family: var(--cm-sans) !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  transition: background-color 0.12s var(--hover-ease), color 0.12s var(--hover-ease), transform 0.1s var(--spring-ease) !important;
+}
+[data-testid="automations-button"]:hover,
+[data-testid="settings-button"]:hover,
+a[href*="/history"]:hover,
+a[href*="/customizations"]:hover {
+  background-color: var(--sidebar-muted) !important;
+  color: var(--text-bold) !important;
+}
+[data-testid="automations-button"]:active,
+[data-testid="settings-button"]:active {
+  transform: scale(0.98) !important;
+}
+
+/* 侧边栏项目标题与折叠栏 (Section 2 & 3 Headers) */
+[data-testid="section-header"] h2,
+.claude-recent-header {
+  font-family: var(--cm-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--text-muted) !important;
+}
+
+/* 侧边栏会话行项 (Conversation Rows) */
+[data-testid="conversation-row-sidebar"] {
+  border-radius: 8px !important;
+  transition: background-color 0.12s var(--hover-ease), transform 0.12s var(--spring-ease) !important;
+  margin: 1px 0 !important;
+  font-family: var(--cm-sans) !important;
+}
+
+/* 悬停态：细腻底色平移 */
+[data-testid="conversation-row-sidebar"]:not([data-selected="true"]):hover {
+  background-color: var(--sidebar-muted) !important;
+  transform: translateX(1.5px) !important;
+}
+
+/* 激活选中态：陶土橙专属书签立标 + 柔和温润底色 */
+[data-testid="conversation-row-sidebar"][data-selected="true"] {
+  background-color: var(--sidebar-active) !important;
+  border-left: 3px solid var(--accent) !important;
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+[data-testid="conversation-row-sidebar"][data-selected="true"] span,
+[data-testid="conversation-row-sidebar"][data-selected="true"] a {
+  font-weight: 550 !important;
+  color: var(--text-bold) !important;
+}
+
+/* 相对时间戳：严格等宽对齐 */
+[data-testid="conversation-row-sidebar"] span:has(+ button),
+[data-testid="conversation-row-sidebar"] .tabular-nums,
+[data-testid="conversation-row-sidebar"] span:last-child {
+  font-variant-numeric: tabular-nums !important;
+  font-size: 11px !important;
+  color: var(--text-muted) !important;
+}
+
+/* ==========================================================================
+   6.5 侧边栏最近对话列表 (Section 3: 最近，平滑风琴折叠 + 陶土橙微标识)
    ========================================================================== */
 .claude-recent-section {
-  margin-top: 10px;
-  padding-top: 4px;
+  margin-top: 14px;
+  padding-top: 6px;
   padding-bottom: 32px;
   display: flex;
   flex-direction: column;
@@ -447,17 +585,19 @@ div[data-index]:has(button[data-project-card="true"]) {
 .claude-recent-toggle-btn {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
   font-family: var(--cm-sans) !important;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
   outline: none;
-  transition: color 0.12s ease;
+  transition: color 0.14s ease;
 }
 
 .claude-recent-toggle-btn:hover {
@@ -467,34 +607,31 @@ div[data-index]:has(button[data-project-card="true"]) {
 .claude-recent-chevron {
   width: 14px;
   height: 14px;
-  opacity: 0.6;
+  opacity: 0.55;
   transform-origin: center;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
+  transition: transform 0.22s var(--spring-ease), opacity 0.15s ease;
 }
 
 .claude-recent-toggle-btn:hover .claude-recent-chevron {
   opacity: 0.95;
 }
 
-/* 展开态：箭头朝下 rotate(90deg) */
 .claude-recent-toggle-btn[aria-expanded="true"] .claude-recent-chevron {
   transform: rotate(90deg);
 }
 
-/* 折叠态：箭头朝右 rotate(0deg) */
 .claude-recent-toggle-btn[aria-expanded="false"] .claude-recent-chevron {
   transform: rotate(0deg);
 }
 
-/* 平滑风琴手风琴折叠动画 */
 .claude-recent-list {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 1.5px;
   max-height: 2000px;
   opacity: 1;
   transform-origin: top center;
-  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  transition: max-height 0.28s var(--spring-ease), opacity 0.2s ease;
   overflow: hidden;
 }
 
@@ -507,10 +644,10 @@ div[data-index]:has(button[data-project-card="true"]) {
 .claude-recent-item {
   display: block;
   width: 100%;
-  padding: 5px 8px;
-  border-radius: 6px;
+  padding: 5.5px 9px;
+  border-radius: 7px;
   font-family: var(--cm-sans) !important;
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.4;
   color: var(--text);
   text-decoration: none;
@@ -518,7 +655,7 @@ div[data-index]:has(button[data-project-card="true"]) {
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  transition: background-color 0.12s ease, color 0.12s ease, transform 0.12s ease;
+  transition: background-color 0.12s var(--hover-ease), color 0.12s var(--hover-ease), transform 0.1s var(--spring-ease);
   user-select: none;
   box-sizing: border-box;
 }
@@ -526,42 +663,606 @@ div[data-index]:has(button[data-project-card="true"]) {
 .claude-recent-item:hover {
   background-color: var(--sidebar-muted) !important;
   color: var(--text-bold) !important;
-  transform: translateX(2px);
+  transform: translateX(1.5px);
 }
 
-/* 当前处于激活态的对话：沉稳中性灰底色 + 陶土橙微标识线 */
+.claude-recent-item:active {
+  transform: scale(0.985);
+}
+
 .claude-recent-item.active {
   background-color: var(--sidebar-active) !important;
   color: var(--text-bold) !important;
-  font-weight: 500 !important;
-  border-left: 2.5px solid var(--accent) !important;
-  padding-left: 6.5px !important;
-  border-radius: 2px 6px 6px 2px !important;
+  font-weight: 550 !important;
+  border-left: 3px solid var(--accent) !important;
+  padding-left: 6px !important;
+  border-radius: 2px 7px 7px 2px !important;
 }
 
 /* ==========================================================================
-   9. macOS 原生极细浮动滚动条 (macOS Floating Slim Scrollbars)
+   7. 用户提问气泡高定质感 (Claude-Style User Speech Card)
+   ========================================================================== */
+/* 外层容器：消除原生默认阴影与错位 */
+div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]),
+div.relative.p-px.rounded-2xl.bg-card-border:has(div[data-quotable="true"]) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-left: auto !important;
+  max-width: 90% !important;
+}
+
+/* 用户气泡卡片：温润优雅质感 */
+div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card,
+div.relative.p-px.rounded-2xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card {
+  background-color: var(--surface-quote) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 16px !important;
+  padding: 10px 16px !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card:hover {
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* 用户气泡内文字 */
+div[data-quotable="true"] {
+  font-family: var(--cm-sans) !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: var(--text) !important;
+  letter-spacing: -0.005em !important;
+}
+
+/* 用户卡片悬浮操作栏 (复制 / 撤回) 晶透胶囊化 */
+.user-input-buttons-container {
+  background: var(--surface-translucent) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 9999px !important;
+  box-shadow: var(--shadow-sm) !important;
+  padding: 2px 6px !important;
+  transform: translateY(3px) !important;
+  transition: all 0.15s var(--spring-ease) !important;
+}
+.group\/user-input-step:hover .user-input-buttons-container {
+  transform: translateY(0) !important;
+}
+
+/* ==========================================================================
+   8. 底部输入框：悬浮晶透高能控制坞 (Floating Acrylic Dock)
+   ========================================================================== */
+/* 外层容器净化与无缝衔接 */
+div:has(> [id="antigravity.agentSidePanelInputBox"]),
+.flex.flex-col.w-full.shrink-0:has([id="antigravity.agentSidePanelInputBox"]) {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  filter: none !important;
+  background: transparent !important;
+  padding-bottom: 8px !important;
+}
+
+/* 核心浮动 Dock 结构 */
+[id="antigravity.agentSidePanelInputBox"] {
+  border-radius: 20px !important;
+  border: 1px solid var(--border) !important;
+  background-color: var(--surface) !important;
+  background: var(--surface-translucent) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  box-shadow: var(--shadow-dock) !important;
+  outline: none !important;
+  transition: border-color 0.2s var(--spring-ease), box-shadow 0.25s var(--spring-ease), transform 0.2s var(--spring-ease) !important;
+  overflow: visible !important;
+}
+
+/* 聚焦态：微升高光环与轻微上浮物理反馈 */
+[id="antigravity.agentSidePanelInputBox"]:focus-within {
+  border-color: var(--border-focus) !important;
+  box-shadow: var(--shadow-dock-focus), 0 0 0 2.5px var(--accent-ring) !important;
+  transform: translateY(-1.5px) !important;
+}
+
+/* 输入框内层容器与卡片底色 */
+[id="antigravity.agentSidePanelInputBox"] > .bg-card,
+[id="antigravity.agentSidePanelInputBox"] .bg-card {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 输入框顶部运行中任务抽屉 (Running tasks panel inside dock) */
+div[data-testid="running-items-panel"] {
+  border-bottom: 1px solid var(--border-subtle) !important;
+  background-color: var(--muted) !important;
+  border-top-left-radius: 19px !important;
+  border-top-right-radius: 19px !important;
+  overflow: hidden !important;
+}
+div[data-testid="running-items-panel"] button {
+  font-family: var(--cm-sans) !important;
+  font-size: 12px !important;
+  font-weight: 550 !important;
+  color: var(--text-muted) !important;
+  transition: color 0.12s ease !important;
+}
+div[data-testid="running-items-panel"] button:hover {
+  color: var(--text-bold) !important;
+}
+div[data-testid="running-items-panel"] .font-mono,
+div[data-testid="running-items-panel"] pre,
+div[data-testid="running-items-panel"] code {
+  font-family: var(--cm-mono) !important;
+  font-size: 11.5px !important;
+  color: var(--text) !important;
+}
+
+/* 输入框核心文本域 */
+[id="antigravity.agentSidePanelInputBox"] textarea,
+[id="antigravity.agentSidePanelInputBox"] [contenteditable="true"] {
+  font-family: var(--cm-sans) !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  color: var(--text) !important;
+  caret-color: var(--accent) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+[id="antigravity.agentSidePanelInputBox"] textarea::placeholder,
+[id="antigravity.agentSidePanelInputBox"] [contenteditable="true"]::placeholder {
+  color: var(--placeholder) !important;
+  font-weight: 400 !important;
+}
+
+/* 模型选择器触发胶囊 ([data-testid="model-selector-trigger"]) */
+[data-testid="model-selector-trigger"] {
+  height: 28px !important;
+  background-color: var(--muted) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 9999px !important;
+  padding: 0 10px !important;
+  font-family: var(--cm-sans) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--text) !important;
+  transition: all 0.14s var(--spring-ease) !important;
+}
+[data-testid="model-selector-trigger"]:hover {
+  background-color: var(--muted-hover) !important;
+  border-color: var(--border) !important;
+}
+[data-testid="model-selector-trigger"]:active {
+  transform: scale(0.96) !important;
+}
+
+/* 上下文附件按钮 (+) 与 语音录音麦克风 */
+button[aria-label="Add context"],
+button[aria-label="Record voice memo"] {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 9999px !important;
+  transition: all 0.12s var(--spring-ease) !important;
+  color: var(--text-muted) !important;
+}
+button[aria-label="Add context"]:hover,
+button[aria-label="Record voice memo"]:hover {
+  background-color: var(--muted) !important;
+  color: var(--text-bold) !important;
+}
+button[aria-label="Add context"]:active,
+button[aria-label="Record voice memo"]:active {
+  transform: scale(0.92) !important;
+}
+
+/* 发送消息按钮与停止生成按钮：充满生机的陶土橙色与 Apple 触感按压弹性 */
+[id="antigravity.agentSidePanelInputBox"] [data-testid="send-button"],
+[id="antigravity.agentSidePanelInputBox"] button[aria-label="Send message"],
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Cancel"],
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Stop"] {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(218, 119, 86, 0.32) !important;
+  transition: transform 0.1s var(--spring-ease), background-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+[id="antigravity.agentSidePanelInputBox"] [data-testid="send-button"]:hover,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label="Send message"]:hover,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Cancel"]:hover,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Stop"]:hover {
+  background-color: var(--accent-hover) !important;
+  box-shadow: 0 4px 12px rgba(218, 119, 86, 0.42) !important;
+}
+[id="antigravity.agentSidePanelInputBox"] [data-testid="send-button"]:active,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label="Send message"]:active,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Cancel"]:active,
+[id="antigravity.agentSidePanelInputBox"] button[aria-label*="Stop"]:active {
+  transform: scale(0.91) !important;
+}
+
+/* ==========================================================================
+   9. 思考与工具折叠栏轻量化与严密显示控制 (Unified Thought & Tool Execution)
+   ========================================================================== */
+/* 核心修复：尊重原生 .hidden 类，杜绝强制显示已隐藏的项目 */
+button[data-testid="tool-group-collapsible"].hidden,
+button[data-testid="thinking-collapsible-trigger"].hidden,
+button[data-testid="worked-for-collapsible"].hidden {
+  display: none !important;
+}
+
+/* 未隐藏的抽屉触发条 */
+button[data-testid="tool-group-collapsible"]:not(.hidden),
+button[data-testid="thinking-collapsible-trigger"]:not(.hidden),
+button[data-testid="worked-for-collapsible"]:not(.hidden) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
+  min-height: unset !important;
+  height: auto !important;
+  font-family: var(--cm-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  font-variant-numeric: tabular-nums !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  transition: color 0.15s ease !important;
+}
+button[data-testid="tool-group-collapsible"]:not(.hidden):hover,
+button[data-testid="thinking-collapsible-trigger"]:not(.hidden):hover,
+button[data-testid="worked-for-collapsible"]:not(.hidden):hover {
+  color: var(--text-bold) !important;
+}
+
+/* 活跃执行中呼吸指示灯 */
+.claude-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--accent);
+  box-shadow: 0 0 6px rgba(218, 119, 86, 0.6);
+  animation: claudeBreathing 1.8s ease-in-out infinite;
+  display: inline-block;
+  margin-right: 2px;
+}
+@keyframes claudeBreathing {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 10px rgba(218, 119, 86, 0.8); }
+}
+
+/* 抽屉展开区域 */
+div.relative:has(> button[data-testid="tool-group-collapsible"]) > div.relative > div.overflow-y-auto,
+div.relative:has(> button[data-testid="thinking-collapsible-trigger"]) > div.relative > div.overflow-y-auto,
+div.relative:has(> button[data-testid="worked-for-collapsible"]) > div.relative > div.overflow-y-auto {
+  max-height: 160px !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  margin-top: 4px !important;
+  margin-bottom: 6px !important;
+  padding: 2px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 重复调用徽标 (×N) */
+.claude-dup-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  margin-left: 4px;
+  border-radius: 4px;
+  background-color: var(--muted);
+  color: var(--text-muted);
+  font-family: var(--cm-mono) !important;
+  font-size: 11px;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* 步骤动作名胶囊 */
+.claude-step-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px !important;
+  font-weight: 550 !important;
+  color: var(--text-muted) !important;
+  background-color: var(--muted) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  margin-right: 6px !important;
+  white-space: nowrap !important;
+  user-select: none !important;
+}
+
+/* 单行截断命令文本 */
+.claude-cmd-text {
+  font-family: var(--cm-mono) !important;
+  font-size: 12px !important;
+  color: var(--text) !important;
+}
+
+/* 操作小按钮（复制、展开） */
+.claude-step-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding-left: 8px;
+}
+.claude-step-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  border: none !important;
+  background: transparent !important;
+  color: var(--text-muted);
+  font-family: var(--cm-sans) !important;
+  font-size: 11.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.12s ease;
+}
+.claude-step-btn:hover {
+  color: var(--text-bold);
+  text-decoration-color: var(--text-muted);
+}
+.claude-step-btn:active {
+  transform: scale(0.95);
+}
+
+/* 展开代码框 */
+.claude-cmd-drawer {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 6px 10px;
+  background-color: var(--muted) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.claude-cmd-raw {
+  margin: 0;
+  font-family: var(--cm-mono) !important;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 180px;
+  overflow-y: auto;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* 异常/权限介入提醒条 */
+.claude-intervention-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 6px 10px;
+  background-color: var(--accent-subtle) !important;
+  border: 1px solid rgba(218, 119, 86, 0.25) !important;
+  border-radius: 8px;
+  font-family: var(--cm-sans) !important;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   10. 表格、代码块与数据展示高工质感 (High-Craft Code & Data Presentation)
+   ========================================================================== */
+/* 表格设计：现代无偏色优雅排版 */
+table.min-w-full {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  margin: 1rem 0 !important;
+}
+table.min-w-full th {
+  background-color: var(--muted) !important;
+  border-bottom: 1.5px solid var(--border) !important;
+  padding: 9px 14px !important;
+  font-family: var(--cm-sans) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--text-bold) !important;
+  text-align: left !important;
+}
+table.min-w-full td {
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 14px !important;
+  font-size: 13.5px !important;
+  color: var(--text) !important;
+  font-variant-numeric: tabular-nums !important;
+}
+table.min-w-full tr:last-child td {
+  border-bottom: none !important;
+}
+table.min-w-full tr {
+  transition: background-color 0.12s ease !important;
+}
+table.min-w-full tr:hover td {
+  background-color: var(--sidebar-muted) !important;
+}
+
+/* 独立代码块 (Code Blocks) */
+pre,
+div.relative.rounded-xl.bg-muted.border,
+div.relative.whitespace-pre-wrap.rounded-xl.bg-muted.border,
+.code-block {
+  background-color: var(--muted) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  color: var(--text) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+:not(pre) > code,
+code.whitespace-pre-wrap {
+  background-color: var(--muted) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-bold) !important;
+  border-radius: 5px !important;
+  padding: 1.5px 5px !important;
+  font-size: 0.88em !important;
+}
+
+/* ==========================================================================
+   11. 文件单机即开与 Apple 级原质毛玻璃上下文菜单 (Finder / File Context Menu)
+   ========================================================================== */
+/* 文件药丸鼠标交互反馈 */
+button.inline-pill,
+[data-uri^="file://"],
+[data-testid="changed-file-row"],
+[data-testid="view-file-step"] {
+  cursor: pointer !important;
+  transition: opacity 0.14s ease, transform 0.1s var(--spring-ease) !important;
+}
+button.inline-pill:hover,
+[data-uri^="file://"]:hover {
+  opacity: 0.88;
+}
+button.inline-pill:active,
+[data-uri^="file://"]:active,
+.claude-file-active-click {
+  transform: scale(0.97) !important;
+  opacity: 0.72 !important;
+}
+
+/* 浮动毛玻璃上下文菜单 */
+.claude-file-context-menu {
+  position: fixed;
+  z-index: 999999;
+  min-width: 190px;
+  max-width: 290px;
+  padding: 6px;
+  border-radius: 14px;
+  font-family: var(--cm-sans) !important;
+  user-select: none;
+  pointer-events: auto;
+  animation: claudeMenuPop 0.12s var(--spring-ease) forwards;
+  transform-origin: top left;
+
+  /* 浅色模式毛玻璃与双层环境阴影 */
+  background: var(--surface-translucent);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-popover);
+  color: var(--text-bold);
+}
+
+/* 顶部文件名微信息条 */
+.claude-fcm-header {
+  padding: 5px 8px 6px 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.claude-fcm-filename {
+  font-weight: 600;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 菜单选项条目 */
+.claude-fcm-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 480;
+  line-height: 1.3;
+  cursor: pointer;
+  color: var(--text);
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.08s var(--spring-ease);
+}
+.claude-fcm-item:hover {
+  background-color: var(--sidebar-muted);
+  color: var(--text-bold);
+  transform: translateX(1px);
+}
+.claude-fcm-item:active {
+  transform: scale(0.98);
+}
+
+.claude-fcm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+.claude-fcm-item:hover .claude-fcm-icon {
+  opacity: 1;
+}
+
+.claude-fcm-text {
+  flex-grow: 1;
+  white-space: nowrap;
+}
+
+.claude-fcm-divider {
+  height: 1px;
+  margin: 4px 6px;
+  background-color: var(--border-subtle);
+}
+
+@keyframes claudeMenuPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   12. 极细浮动滚动条与无障碍规范 (Slim Floating Scrollbars & A11y)
    ========================================================================== */
 *::-webkit-scrollbar {
   width: 5px !important;
   height: 5px !important;
 }
-
 *::-webkit-scrollbar-track {
   background: transparent !important;
 }
-
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.12) !important;
+  background-color: rgba(0, 0, 0, 0.13) !important;
   border-radius: 9999px !important;
   transition: background-color 0.2s ease !important;
 }
-
 *::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.28) !important;
 }
 
-/* 侧边栏全面隐藏滚动条轨道，保持边缘纯净 */
+/* 侧边栏全面隐藏轨道 */
 .relative.w-full.h-full.overflow-y-auto,
 [data-testid="conversation-list-sidebar"],
 aside,
@@ -569,7 +1270,6 @@ aside,
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
-
 .relative.w-full.h-full.overflow-y-auto::-webkit-scrollbar,
 [data-testid="conversation-list-sidebar"]::-webkit-scrollbar,
 aside::-webkit-scrollbar,
@@ -588,527 +1288,18 @@ aside::-webkit-scrollbar,
   }
 }
 
-
-/* ==========================================================================
-   10. 用户提问气泡高定质感 (Claude-Style User Prompt Card)
-   ========================================================================== */
-div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) {
-  background-color: transparent !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-}
-
-div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card {
-  background-color: #f2f0eb !important;
-  border: 1px solid #e8e6e0 !important;
-  border-radius: 14px !important;
-  padding: 8px 12px !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card {
-    background-color: #2a2a28 !important;
-    border-color: #383836 !important;
+/* 减弱动态模式 (Reduced Motion) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .claude-pulse-dot {
+    animation: none !important;
+    opacity: 0.8 !important;
   }
 }
-
-body.theme-dark div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card,
-html.dark div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card,
-[data-theme="dark"] div.relative.p-px.rounded-xl.bg-card-border:has(div[data-quotable="true"]) > .bg-card {
-  background-color: #2a2a28 !important;
-  border-color: #383836 !important;
-}
-
-/* ==========================================================================
-   11. AI 思考与工具折叠栏轻量化 (Thinking & Tool Pills)
-   ========================================================================== */
-button[data-testid="thinking-collapsible-trigger"],
-button[data-testid="tool-group-collapsible"],
-button[data-testid="worked-for-collapsible"] {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  color: var(--text-muted) !important;
-  font-size: 13px !important;
-  transition: color 0.15s ease !important;
-}
-
-button[data-testid="thinking-collapsible-trigger"]:hover,
-button[data-testid="tool-group-collapsible"]:hover,
-button[data-testid="worked-for-collapsible"]:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: var(--text-bold) !important;
-}
-
-/* ==========================================================================
-   12. Apple 原生物理微交互 (Spring Physics Feedback on Press)
-   ========================================================================== */
-button[data-testid="send-button"]:active {
-  transform: scale(0.92) !important;
-  transition: transform 0.08s ease-out !important;
-}
-
-[data-testid="new-conversation-button"]:active,
-button.claude-recent-toggle-btn:active {
-  transform: scale(0.97) !important;
-  transition: transform 0.08s ease-out !important;
-}
-
-[data-testid="new-conversation-button"]:hover {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* ==========================================================================
-   13. Claude 统一思考与工具栏（纯文本极简风，无边框无卡片背景）
-   ========================================================================== */
-
-/* 1. 抽屉触发器（纯文字风格，彻底移除所有外框、背景与阴影） */
-button[data-testid="tool-group-collapsible"],
-button[data-testid="thinking-collapsible-trigger"],
-button[data-testid="worked-for-collapsible"] {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 3px 0 !important;
-  min-height: unset !important;
-  height: auto !important;
-  font-family: var(--cm-sans) !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: var(--text-muted) !important;
-  transition: color 0.15s ease !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-}
-
-button[data-testid="tool-group-collapsible"]:hover,
-button[data-testid="thinking-collapsible-trigger"]:hover,
-button[data-testid="worked-for-collapsible"]:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: var(--text-bold) !important;
-}
-
-/* 带有需要介入警告时的触发栏：纯文字警示色，不添加任何厚重外框 */
-button[data-testid="tool-group-collapsible"].has-intervention,
-button[data-testid="thinking-collapsible-trigger"].has-intervention,
-button[data-testid="worked-for-collapsible"].has-intervention {
-  border: none !important;
-  background: transparent !important;
-  color: #c25e3e !important;
-}
-
-/* 2. 展开区域高度约束：约 6 行 (~140px)，彻底移除框线、边框与底色 */
-div.relative:has(> button[data-testid="tool-group-collapsible"]) > div.relative > div.overflow-y-auto,
-div.relative:has(> button[data-testid="thinking-collapsible-trigger"]) > div.relative > div.overflow-y-auto,
-div.relative:has(> button[data-testid="worked-for-collapsible"]) > div.relative > div.overflow-y-auto,
-.claude-running-drawer {
-  max-height: 140px !important;
-  overflow-y: auto !important;
-  overscroll-behavior: contain !important;
-  margin-top: 2px !important;
-  margin-bottom: 4px !important;
-  padding: 2px 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  border-left: none !important;
-  box-shadow: none !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  div.relative:has(> button[data-testid="tool-group-collapsible"]) > div.relative > div.overflow-y-auto,
-  div.relative:has(> button[data-testid="thinking-collapsible-trigger"]) > div.relative > div.overflow-y-auto,
-  div.relative:has(> button[data-testid="worked-for-collapsible"]) > div.relative > div.overflow-y-auto,
-  .claude-running-drawer {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    border-left: none !important;
-    box-shadow: none !important;
-  }
-}
-
-body.theme-dark div.relative:has(> button[data-testid="tool-group-collapsible"]) > div.relative > div.overflow-y-auto,
-body.theme-dark div.relative:has(> button[data-testid="thinking-collapsible-trigger"]) > div.relative > div.overflow-y-auto,
-body.theme-dark div.relative:has(> button[data-testid="worked-for-collapsible"]) > div.relative > div.overflow-y-auto,
-body.theme-dark .claude-running-drawer {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  border-left: none !important;
-  box-shadow: none !important;
-}
-
-/* 3. 连续相同调用合并行隐藏 */
-.claude-merged-row {
-  display: none !important;
-}
-
-/* 4. 重复调用计数徽标 (×N)：纯文本小标识 */
-.claude-dup-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-  margin-left: 4px;
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--cm-sans) !important;
-  font-size: 11px;
-  font-weight: 600;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-/* 5. 步骤动作名前置（纯文字，无药丸背景框） */
-.claude-step-badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  color: var(--text-muted) !important;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin-right: 6px !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-  user-select: none !important;
-}
-
-/* 6. 单行截断命令文本 */
-.claude-cmd-text {
-  font-family: var(--cm-mono) !important;
-  font-size: 12px !important;
-  color: var(--text) !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-/* 7. 操作小按钮（复制、展开）：纯文本超链接交互，无任何外框 */
-.claude-step-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  padding-left: 8px;
-  flex-shrink: 0;
-}
-
-.claude-step-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 2px;
-  border: none !important;
-  background: transparent !important;
-  color: var(--text-muted);
-  font-family: var(--cm-sans) !important;
-  font-size: 11.5px;
-  font-weight: 400;
-  cursor: pointer;
-  outline: none;
-  transition: color 0.12s ease;
-  user-select: none;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-}
-
-.claude-step-btn:hover {
-  border: none !important;
-  color: var(--text-bold);
-  background: transparent !important;
-  text-decoration-color: var(--text-muted);
-}
-
-.claude-step-btn:active {
-  transform: scale(0.95);
-}
-
-/* 8. 展开后的原始完整命令展示（极简纯文本代码块，无厚重框体） */
-.claude-cmd-drawer {
-  margin-top: 4px;
-  margin-bottom: 4px;
-  padding: 4px 0;
-  background: transparent !important;
-  border: none !important;
-  overflow: hidden;
-}
-
-.claude-cmd-raw {
-  margin: 0;
-  padding: 0;
-  font-family: var(--cm-mono) !important;
-  font-size: 11.5px;
-  line-height: 1.45;
-  color: var(--text);
-  white-space: pre-wrap;
-  word-break: break-all;
-  max-height: 180px;
-  overflow-y: auto;
-  background: transparent !important;
-  border: none !important;
-}
-
-/* 9. 异常/权限介入提醒条（纯净单行文字，无厚重外框） */
-.claude-intervention-strip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 2px;
-  padding: 2px 0;
-  background: transparent !important;
-  border: none !important;
-  font-family: var(--cm-sans) !important;
-  font-size: 12px;
-  color: #c25e3e;
-  user-select: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .claude-intervention-strip {
-    color: #e58a6d;
-  }
-}
-body.theme-dark .claude-intervention-strip {
-  color: #e58a6d;
-}
-
-.claude-alert-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0;
-  background: transparent !important;
-  color: #c25e3e;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.3;
-  flex-shrink: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  .claude-alert-badge {
-    color: #e58a6d;
-  }
-}
-body.theme-dark .claude-alert-badge {
-  color: #e58a6d;
-}
-
-.claude-alert-text {
-  font-weight: 500;
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
-@keyframes claudeFadeIn {
-  from { opacity: 0; transform: translateY(-2px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   10. 文件单机即开与右键上下文菜单（Apple / Claude 极简原质风格）
-   ========================================================================== */
-
-/* 文件 Pill 鼠标手势与微交互 */
-button.inline-pill,
-[data-uri^="file://"],
-[data-testid="changed-file-row"],
-[data-testid="view-file-step"] {
-  cursor: pointer !important;
-  transition: opacity 0.15s ease, background-color 0.15s ease, transform 0.1s ease !important;
-}
-
-button.inline-pill:hover,
-[data-uri^="file://"]:hover {
-  opacity: 0.88;
-}
-
-button.inline-pill:active,
-[data-uri^="file://"]:active,
-.claude-file-active-click {
-  transform: scale(0.97) !important;
-  opacity: 0.75 !important;
-}
-
-/* 浮动上下文菜单容器 */
-.claude-file-context-menu {
-  position: fixed;
-  z-index: 999999;
-  min-width: 180px;
-  max-width: 280px;
-  padding: 5px;
-  border-radius: 12px;
-  font-family: var(--cm-sans) !important;
-  user-select: none;
-  pointer-events: auto;
-  animation: claudeMenuPop 0.12s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: top left;
-
-  /* 浅色模式毛玻璃与阴影 */
-  background: rgba(255, 255, 255, 0.84);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.14),
-              0 2px 8px -2px rgba(0, 0, 0, 0.05),
-              0 0 0 1px rgba(0, 0, 0, 0.04);
-  color: #1f1f1d;
-}
-
-/* 深色模式毛玻璃与阴影 */
-:root.dark .claude-file-context-menu,
-html.dark .claude-file-context-menu,
-body.dark .claude-file-context-menu,
-.theme-dark .claude-file-context-menu,
-[data-theme="dark"] .claude-file-context-menu {
-  background: rgba(38, 38, 36, 0.86);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.55),
-              0 4px 12px -2px rgba(0, 0, 0, 0.35),
-              0 0 0 1px rgba(255, 255, 255, 0.08);
-  color: #f2f1ed;
-}
-
-@media (prefers-color-scheme: dark) {
-  .claude-file-context-menu {
-    background: rgba(38, 38, 36, 0.86);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.55),
-                0 4px 12px -2px rgba(0, 0, 0, 0.35),
-                0 0 0 1px rgba(255, 255, 255, 0.08);
-    color: #f2f1ed;
-  }
-}
-
-/* 顶部文件名微信息条 */
-.claude-fcm-header {
-  padding: 5px 8px 5px 8px;
-  font-size: 11px;
-  line-height: 1.3;
-  color: #8c8a82;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  margin-bottom: 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-:root.dark .claude-fcm-header,
-html.dark .claude-fcm-header,
-body.dark .claude-fcm-header,
-.theme-dark .claude-fcm-header,
-[data-theme="dark"] .claude-fcm-header {
-  color: #9e9d96;
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.claude-fcm-filename {
-  font-weight: 600;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 菜单选项条目 */
-.claude-fcm-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 9px;
-  border-radius: 7px;
-  font-size: 12.5px;
-  font-weight: 450;
-  line-height: 1.3;
-  cursor: pointer;
-  transition: background-color 0.1s ease, color 0.1s ease;
-}
-
-.claude-fcm-item:hover {
-  background-color: rgba(0, 0, 0, 0.06);
-}
-
-:root.dark .claude-fcm-item:hover,
-html.dark .claude-fcm-item:hover,
-body.dark .claude-fcm-item:hover,
-.theme-dark .claude-fcm-item:hover,
-[data-theme="dark"] .claude-fcm-item:hover {
-  background-color: rgba(255, 255, 255, 0.09);
-}
-
-.claude-fcm-item:active {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-:root.dark .claude-fcm-item:active,
-html.dark .claude-fcm-item:active,
-body.dark .claude-fcm-item:active,
-.theme-dark .claude-fcm-item:active,
-[data-theme="dark"] .claude-fcm-item:active {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* 图标与文字 */
-.claude-fcm-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  opacity: 0.75;
-}
-
-.claude-fcm-item:hover .claude-fcm-icon {
-  opacity: 1;
-}
-
-.claude-fcm-text {
-  flex-grow: 1;
-  white-space: nowrap;
-}
-
-/* 分割线 */
-.claude-fcm-divider {
-  height: 1px;
-  margin: 3px 5px;
-  background-color: rgba(0, 0, 0, 0.06);
-}
-
-:root.dark .claude-fcm-divider,
-html.dark .claude-fcm-divider,
-body.dark .claude-fcm-divider,
-.theme-dark .claude-fcm-divider,
-[data-theme="dark"] .claude-fcm-divider {
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-@keyframes claudeMenuPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-
-

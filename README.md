@@ -46,7 +46,7 @@
 1. **环境准备**：已安装 [Node.js](https://nodejs.org/) (`brew install node`)
 2. **一键安装**：
    ```bash
-   git clone https://github.com/LAN1357/antigravity-claude-award.git ~/claude-style
+   git clone https://github.com/LAN1357/antigravity-claude-pro.git ~/claude-style
    cd ~/claude-style
    chmod +x install.sh
    ./install.sh
@@ -65,7 +65,7 @@
 2. **一键安装**：
    在 CMD 或 PowerShell 中运行：
    ```cmd
-   git clone https://github.com/LAN1357/antigravity-claude-award.git "%USERPROFILE%\claude-style"
+   git clone https://github.com/LAN1357/antigravity-claude-pro.git "%USERPROFILE%\claude-style"
    cd /d "%USERPROFILE%\claude-style"
    install.bat
    ```

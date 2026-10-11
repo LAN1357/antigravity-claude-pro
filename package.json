@@ -1,14 +1,23 @@
 {
-  "name": "claude-style",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "antigravity-claude-pro",
+  "version": "2.0.0",
+  "description": "Awwwards & Apple Design Caliber Claude Design System for Google Antigravity 2.x (macOS & Windows)",
+  "main": "inject.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node inject.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "antigravity",
+    "claude",
+    "apple-design",
+    "theme",
+    "ui",
+    "ux",
+    "macos",
+    "windows"
+  ],
+  "author": "LAN1357",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "puppeteer-core": "^25.12.0"

@@ -18,7 +18,7 @@ echo ">> 正在安装依赖 (puppeteer-core)..."
 npm install --silent
 
 echo ">> 赋予脚本执行权限..."
-chmod +x "$DIR/start-claude-style.command"
+chmod +x "$DIR/start-claude-style.command" "$DIR/repair-antigravity.command"
 
 # 2. 编译 macOS 原生快捷启动应用
 echo ">> 正在生成 ~/Applications/Claude Antigravity.app..."
